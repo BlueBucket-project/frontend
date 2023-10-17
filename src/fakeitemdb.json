@@ -1,0 +1,117 @@
+[
+  {
+    "itemDetail": "아이패드 싸게 팝니다",
+    "itemid": 1,
+    "itemImgList": [
+      {
+        "itemid": 1,
+        "itemImgId": 1,
+        "oriImgName": "textImg",
+        "repImgYn": "string?",
+        "uploadImgName": "q2wev",
+        "uploadImgPath": "aw;eoif",
+        "uploadImgUrl": "aws;eio"
+      }
+    ],
+    "itemName": "아이패드",
+    "itemSellStatus": 1,
+    "memberNickName": "애플",
+    "price": 200000,
+    "regtime": "2023-10-06T14:45:08",
+    "sellPlace": "서울 강남",
+    "stockNumber": 1,
+    "updateTime": "2023-10-06T14:45:08"
+  },
+  {
+    "itemDetail": "노트북 중고 ㄹㅇ쌈",
+    "itemid": 2,
+    "itemImgList": [
+      {
+        "itemid": 2,
+        "itemImgId": 2,
+        "oriImgName": "textImg",
+        "repImgYn": "string?",
+        "uploadImgName": "q2wev",
+        "uploadImgPath": "aw;eoif",
+        "uploadImgUrl": "aws;eio"
+      }
+    ],
+    "itemName": "레노버 노트북",
+    "itemSellStatus": 1,
+    "memberNickName": "판매자",
+    "price": 900000,
+    "regtime": "2023-10-06T14:45:08",
+    "sellPlace": "인천 연수구",
+    "stockNumber": 1,
+    "updateTime": "2023-10-06T14:45:08"
+  },
+  {
+    "itemDetail": "테스트용 업로드",
+    "itemid": 3,
+    "itemImgList": [
+      {
+        "itemid": 3,
+        "itemImgId": 3,
+        "oriImgName": "textImg",
+        "repImgYn": "string?",
+        "uploadImgName": "q2wev",
+        "uploadImgPath": "aw;eoif",
+        "uploadImgUrl": "aws;eio"
+      }
+    ],
+    "itemName": "잡템",
+    "itemSellStatus": 3,
+    "memberNickName": "메롱이다",
+    "price": 20000,
+    "regtime": "2023-10-06T14:45:08",
+    "sellPlace": "대전 성심당",
+    "stockNumber": 1,
+    "updateTime": "2023-10-06T14:45:08"
+  },
+  {
+    "itemDetail": "아이디어가 떨어짐",
+    "itemid": 4,
+    "itemImgList": [
+      {
+        "itemid": 4,
+        "itemImgId": 4,
+        "oriImgName": "textImg",
+        "repImgYn": "string?",
+        "uploadImgName": "q2wev",
+        "uploadImgPath": "aw;eoif",
+        "uploadImgUrl": "aws;eio"
+      }
+    ],
+    "itemName": "커피머신",
+    "itemSellStatus": 5,
+    "memberNickName": "코스타리카",
+    "price": 20000,
+    "regtime": "2023-10-06T14:45:08",
+    "sellPlace": "부산 해운대",
+    "stockNumber": 1,
+    "updateTime": "2023-10-06T14:45:08"
+  },
+  {
+    "itemDetail": "마지막 업로드",
+    "itemid": 5,
+    "itemImgList": [
+      {
+        "itemid": 5,
+        "itemImgId": 5,
+        "oriImgName": "textImg",
+        "repImgYn": "string?",
+        "uploadImgName": "q2wev",
+        "uploadImgPath": "aw;eoif",
+        "uploadImgUrl": "aws;eio"
+      }
+    ],
+    "itemName": "임영웅 굿즈",
+    "itemSellStatus": 1,
+    "memberNickName": "효도하자",
+    "price": 20000,
+    "regtime": "2023-10-06T14:45:08",
+    "sellPlace": "서울 서초",
+    "stockNumber": 20,
+    "updateTime": "2023-10-06T14:45:08"
+  }
+]
