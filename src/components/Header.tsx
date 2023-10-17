@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import { useState } from "react";
+import Logo from "./Logo.tsx";
 
 function Header() {
   const user = useAppSelector((state) => state.user.value);
