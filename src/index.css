@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .input-base {
+    @apply my-5 h-12 rounded border;
+  }
+}

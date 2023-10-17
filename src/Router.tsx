@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "./pages/loginpage";
+import Login from "./pages/Login.tsx";
 import Home from "./pages/Home.tsx";
 import Cart from "./pages/Cart.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import Search from "./pages/Search.tsx";
+import Register from "./pages/Register.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,10 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/search",
+    path: "/register",
+    element: <Register />,
+  },
+  { path: "/search",
     element: <Search />,
     children: [{ path: ":item", element: "" }],
   },
