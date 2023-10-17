@@ -14,7 +14,11 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  { path: "/search", element: <Search /> },
+  {
+    path: "/search",
+    element: <Search />,
+    children: [{ path: ":item", element: "" }],
+  },
   { path: "/cart", element: <Cart /> },
   { path: "/mypage", element: <MyPage />, children: [{}] },
 ]);
