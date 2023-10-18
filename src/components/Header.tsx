@@ -23,7 +23,7 @@ function Header() {
     }
   };
   return (
-    <div className="sticky left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full max-w-5xl items-center justify-center bg-white p-2 shadow-sm">
+    <div className="sticky left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full max-w-5xl items-center justify-between bg-white p-2 shadow-sm">
       <div className="block h-full w-14">
         <Logo />
       </div>

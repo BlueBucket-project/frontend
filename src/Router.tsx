@@ -5,6 +5,7 @@ import Cart from "./pages/Cart.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import Search from "./pages/Search.tsx";
 import Register from "./pages/Register.tsx";
+import ItemDetail from "./pages/ItemDetail.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,12 +20,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-  { path: "/search",
+  {
+    path: "/search",
     element: <Search />,
     children: [{ path: ":item", element: "" }],
   },
   { path: "/cart", element: <Cart /> },
   { path: "/mypage", element: <MyPage />, children: [{}] },
+  { path: "/item/:itemid", element: <ItemDetail /> },
 ]);
 
 export default router;
