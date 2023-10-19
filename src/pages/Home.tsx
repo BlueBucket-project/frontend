@@ -4,8 +4,6 @@ import Card from "../components/Card.tsx";
 import { ReactElement } from "react";
 import fakeitemdb from "../fakeitemdb.json";
 
-export type fakeItemDB = typeof fakeitemdb;
-
 function Home(): ReactElement {
   return (
     <>

@@ -3,8 +3,6 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 import fakeitemdb from "../fakeitemdb.json";
 
-export type fakeItemDB = typeof fakeitemdb;
-
 export default function Search() {
   const { item } = useParams();
   console.log(item);

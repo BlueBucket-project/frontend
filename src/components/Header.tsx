@@ -16,7 +16,6 @@ function Header() {
 
   const onSubmit = () => {
     if (item === "") {
-      setItem("");
       navigate("/");
     } else {
       navigate(`/search/${item}`);
