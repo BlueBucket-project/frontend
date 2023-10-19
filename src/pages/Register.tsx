@@ -10,6 +10,7 @@ export default function Register(): ReactElement {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
+  const [zipCode, setZipCode] = useState<string>("");
   const [addr, setAddr] = useState<string>("");
   const [addrDetail, setAddrDetail] = useState<string>("");
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function Register(): ReactElement {
   };
 
   const onComplete = (data: Address) => {
-    console.log(data);
+    setZipCode(data.zonecode);
     setAddr(data.address);
     setAddrDetail(data.buildingName);
     setIsModalOpened(false);
@@ -66,15 +67,15 @@ export default function Register(): ReactElement {
           />
           <div className="flex gap-4">
             <input
-              type="addr"
-              id="addr"
-              value={addr}
-              onChange={(e) => setAddr(e.target.value)}
-              placeholder="주소"
+              type="zipCode"
+              id="zipCode"
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+              placeholder="우편번호"
               className="input-base grow border-gray-400 bg-gray-100 pl-3"
             />
             <button
-              className="input-base w-2/12 bg-amber-200"
+              className="input-base w-3/12 bg-amber-200"
               onClick={() => setIsModalOpened(!isModalOpened)}
             >
               주소 검색
@@ -91,6 +92,14 @@ export default function Register(): ReactElement {
               />
             </Popup>
           </div>
+          <input
+            type="addr"
+            id="addr"
+            value={addr}
+            onChange={(e) => setAddr(e.target.value)}
+            placeholder="주소"
+            className="input-base border-gray-400 bg-gray-100 pl-3"
+          />
           <input
             type="addrDetail"
             id="addrDetail"
