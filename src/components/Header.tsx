@@ -16,17 +16,16 @@ function Header() {
 
   const onSubmit = () => {
     if (item === "") {
-      setItem("");
       navigate("/");
     } else {
       navigate(`/search/${item}`);
     }
   };
   return (
-    <div className="sticky left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full max-w-5xl items-center justify-center bg-white p-2 shadow-sm">
-      <div className="block h-full w-14">
+    <div className="sticky left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full max-w-5xl items-center justify-between border-b bg-white p-2">
+      <Link to="/" className="block h-full w-14">
         <Logo />
-      </div>
+      </Link>
       <div className="h-full w-80">
         <form className="h-full w-full" onSubmit={onSubmit}>
           <input
@@ -42,12 +41,12 @@ function Header() {
       </div>
       {user ? (
         <div className="flex h-full w-32 items-center justify-end">
-          <Link to="mypage">마이페이지</Link>
-          <Link to="cart">장바구니</Link>
+          <Link to="/mypage">마이페이지</Link>
+          <Link to="/cart">장바구니</Link>
         </div>
       ) : (
         <div className="flex h-full w-32 items-center justify-end">
-          <Link to="login">로그인/회원가입</Link>
+          <Link to="/login">로그인/회원가입</Link>
         </div>
       )}
     </div>

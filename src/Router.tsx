@@ -5,6 +5,7 @@ import Cart from "./pages/Cart.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import Search from "./pages/Search.tsx";
 import Register from "./pages/Register.tsx";
+import ItemDetail from "./pages/ItemDetail.tsx";
 import ProductManage from "./pages/ProductManage.tsx";
 import ProductEdit from "./pages/ProductEdit.tsx";
 import PostList from "./pages/PostList.tsx";
@@ -29,6 +30,8 @@ const router = createBrowserRouter([
     element: <Search />,
     children: [{ path: ":item", element: "" }],
   },
+  { path: "/item/:itemId", element: <ItemDetail /> },
+
   {
     path: "/cart",
     element: <Cart />,
