@@ -3,14 +3,19 @@ import Header from "../components/Header";
 import fakeItemDB from "../fakeitemdb.json";
 
 export default function ItemDetail() {
-  const { itemid } = useParams();
-  if (itemid === undefined || "") {
+  const { itemId } = useParams();
+  if (typeof itemId == `undefined` || `null`) {
     redirect("/");
   }
 
-  const item = fakeItemDB.filter((i) => i.itemid === +itemid!);
+  const item = fakeItemDB.find((i) => i.itemid === +itemId!);
+
+  if (typeof item == `undefined` || `null`) {
+    redirect("/");
+  }
 
   const onClick = () => {};
+
   return (
     <>
       <Header />
@@ -21,22 +26,22 @@ export default function ItemDetail() {
           </div>
           <div className="flex w-1/2 flex-col justify-between">
             <div className="mb-8 w-full text-3xl font-bold">
-              {item[0].itemName}
+              {item!.itemName}
             </div>
             <div className="border-b pb-8 text-4xl font-bold">
-              {item[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {item!.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">위치</div>
-              <div>{item[0].sellPlace}</div>
+              <div>{item!.sellPlace}</div>
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">개수</div>
-              <div>{item[0].stockNumber}</div>
+              <div>{item!.stockNumber}</div>
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">올라온 날짜</div>
-              <div>{item[0].regtime.slice(0, 10)}</div>
+              <div>{item!.regtime.slice(0, 10)}</div>
             </div>
             <button
               className="mt-4 h-16 w-full rounded bg-sky-100"
@@ -51,7 +56,7 @@ export default function ItemDetail() {
             <div className="border-b border-b-gray-200 pb-4 text-xl">
               상품 설명
             </div>
-            <div className="mt-8 text-lg">{item[0].itemDetail}</div>
+            <div className="mt-8 text-lg">{item!.itemDetail}</div>
           </div>
         </div>
       </div>

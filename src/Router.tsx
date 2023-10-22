@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   { path: "/cart", element: <Cart /> },
   { path: "/mypage", element: <MyPage />, children: [{}] },
-  { path: "/item/:itemid", element: <ItemDetail /> },
+  { path: "/item/:itemId", element: <ItemDetail /> },
 ]);
 
 export default router;
