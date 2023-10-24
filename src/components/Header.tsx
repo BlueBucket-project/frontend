@@ -40,7 +40,7 @@ function Header() {
         </form>
       </div>
       {user ? (
-        <div className="flex h-full w-32 items-center justify-end">
+        <div className="flex h-full w-40 items-center justify-between">
           <Link to="/mypage">마이페이지</Link>
           <Link to="/cart">장바구니</Link>
         </div>
