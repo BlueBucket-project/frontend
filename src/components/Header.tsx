@@ -22,7 +22,7 @@ function Header() {
     }
   };
   return (
-    <div className="sticky left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full max-w-5xl items-center justify-between border-b bg-white p-2">
+    <div className="sticky left-0 right-0 top-0 z-10 mx-auto mb-8 flex h-16 w-full max-w-5xl items-center justify-between border-b bg-white p-2">
       <Link to="/" className="block h-full w-14">
         <Logo />
       </Link>

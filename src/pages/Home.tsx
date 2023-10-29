@@ -1,14 +1,14 @@
 import Header from "../components/Header.tsx";
-import Banner from "../components/Banner.tsx";
 import Card from "../components/Card.tsx";
 import { ReactElement } from "react";
 import fakeitemdb from "../fakeitemdb.json";
+import Announcement from "../components/Announcement.tsx";
 
 function Home(): ReactElement {
   return (
     <>
       <Header />
-      <Banner />
+      <Announcement />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 text-4xl font-bold">
           <span>방금 올라왔어요</span>
