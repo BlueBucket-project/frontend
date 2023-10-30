@@ -8,7 +8,7 @@ export default function MyPage() {
       <Header />
       <div className="grid grid-cols-[1fr_64rem_1fr] justify-center">
         <Sidebar />
-        <div className="mt-4 h-screen w-full min-w-max max-w-5xl bg-blue-400">
+        <div className="mt-8 h-screen w-full min-w-max max-w-5xl">
           <Outlet />
         </div>
       </div>
