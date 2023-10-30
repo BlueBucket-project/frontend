@@ -11,6 +11,10 @@ import ProductEdit from "./pages/ProductEdit.tsx";
 import PostList from "./pages/PostList.tsx";
 import PostEdit from "./pages/PostEdit.tsx";
 import PostDetail from "./pages/PostDetail.tsx";
+import History from "./components/History.tsx";
+import EditProfile from "./components/EditProfile.tsx";
+import MyPost from "./components/MyPost.tsx";
+import Withdrawal from "./components/Withdrawal.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +45,24 @@ const router = createBrowserRouter([
   {
     path: "/mypage",
     element: <MyPage />,
-    children: [{}],
+    children: [
+      {
+        path: "history",
+        element: <History />,
+      },
+      {
+        path: "mypost",
+        element: <MyPost />,
+      },
+      {
+        path: "edit",
+        element: <EditProfile />,
+      },
+      {
+        path: "withdrawal",
+        element: <Withdrawal />,
+      },
+    ],
   },
   {
     path: "/post/",
