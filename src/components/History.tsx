@@ -6,7 +6,7 @@ export default function History(): ReactElement {
 
   return (
     <div>
-      <div className="pb-2 pl-4 text-3xl">구매 이력</div>
+      <div className="border-b pb-2 pl-4 text-3xl">구매 이력</div>
       <div className="grid grid-cols-2">
         {histories.map((h: History, i: number) => (
           <div
