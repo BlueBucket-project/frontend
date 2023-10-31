@@ -23,7 +23,7 @@ export default function Sidebar({ path }: { path: string }): ReactElement {
         </Link>
         <Link to={links.edit}>
           <div className={path === links.edit ? "font-bold" : ""}>
-            내 정보수정
+            내 정보 수정
           </div>
         </Link>
         <Link to={links.withdrawal}>
