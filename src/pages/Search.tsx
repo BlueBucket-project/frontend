@@ -40,6 +40,10 @@ export default function Search() {
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 text-4xl font-bold">
           <span>"{item}" 에 대한 검색 결과</span>
         </div>
+        <div>
+          <input className="my-8 mr-4" type="checkbox" />
+          <span>구매 가능한 상품만 보기</span>
+        </div>
         <div className="mx-auto my-8 grid max-w-4xl grid-cols-3 gap-8">
           {fakeitemdb
             .filter((i) => i.itemName.includes(item!))
