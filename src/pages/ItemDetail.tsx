@@ -14,6 +14,14 @@ export default function ItemDetail() {
     redirect("/");
   }
 
+  function stockoption(SN: number) {
+    const optionarr = [];
+    for (let i = 0; i < SN; i++) {
+      optionarr.push(<option key={i}>{i + 1}</option>);
+    }
+    return optionarr;
+  }
+
   const onClick = () => {};
 
   return (
@@ -37,7 +45,7 @@ export default function ItemDetail() {
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">개수</div>
-              <div>{item!.stockNumber}</div>
+              <select>{stockoption(item!.stockNumber)}</select>
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">올라온 날짜</div>
