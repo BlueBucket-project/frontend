@@ -60,14 +60,30 @@ export default function ItemDetail() {
           </div>
         </div>
         <div className="mt-16 border-y border-y-black ">
-          <div className="grid grid-cols-2 justify-items-center self-center text-lg font-bold">
+          <div className="grid grid-cols-2 justify-items-center self-center text-xl font-bold">
             <button className="border-r-gray w-full border-r py-4 text-center">
               상품 설명
             </button>
             <button className="w-full py-4 text-center">Q&A</button>
           </div>
         </div>
-        <div>{item!.itemDetail}</div>
+        <div className="mb-8" id="상세설명">
+          <div className="my-4 text-lg font-semibold">판매자 상품 설명</div>
+          <div className="my-4">{item!.itemDetail}</div>
+        </div>
+        <div className="my-4" id="QA">
+          <div className="my-4 text-lg font-bold">Q&A</div>
+          <div className="border-y border-b border-t-2 border-b-gray-400 border-t-black">
+            <div className="grid grid-cols-10 border-b border-b-gray-400 py-4 text-center">
+              <div>답변상태</div>
+              <div className="col-span-7 col-start-2">문의 내용</div>
+              <div>작성자</div>
+              <div>작성일</div>
+            </div>
+            <div className="my-4 text-center">문의 사항이 없습니다.</div>
+          </div>
+          <button className="my-4 rounded-lg bg-blue-50 p-2">문의하기</button>
+        </div>
       </div>
     </>
   );
