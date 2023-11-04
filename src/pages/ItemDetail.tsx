@@ -59,14 +59,15 @@ export default function ItemDetail() {
             </button>
           </div>
         </div>
-        <div className="mt-16 border-t border-t-black">
-          <div className="py-8">
-            <div className="border-b border-b-gray-200 pb-4 text-xl">
+        <div className="mt-16 border-y border-y-black ">
+          <div className="grid grid-cols-2 justify-items-center self-center text-lg font-bold">
+            <button className="border-r-gray w-full border-r py-4 text-center">
               상품 설명
-            </div>
-            <div className="mt-8 text-lg">{item!.itemDetail}</div>
+            </button>
+            <button className="w-full py-4 text-center">Q&A</button>
           </div>
         </div>
+        <div>{item!.itemDetail}</div>
       </div>
     </>
   );
