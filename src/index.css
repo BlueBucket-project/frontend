@@ -4,6 +4,6 @@
 
 @layer components {
   .input-base {
-    @apply my-5 h-12 rounded border;
+    @apply h-10 rounded border;
   }
 }
