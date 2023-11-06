@@ -2,10 +2,10 @@ import { ReactElement, useState } from "react";
 import Logo from "../components/Logo.tsx";
 import naverLogin from "../../public/naverLogin.png";
 import googleLogin from "../../public/googleLogin.png";
-import { Link } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks.ts";
 import { login } from "../features/user/userSlice.ts";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../api/index.ts";
 
 function Login(): ReactElement {
   const [id, setId] = useState<string>("");
@@ -14,8 +14,15 @@ function Login(): ReactElement {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    dispatch(login());
-    //TODO: Implement me
+    const body = { memberEmail: id, memberPw: password };
+    instance.post("/users/login", body).then((res) => {
+      if (res.data.statusCodeValue == 404) {
+        alert("존재하지 않는 아이디입니다.");
+      } else if (res.data.statusCodeValue == 200) {
+        dispatch(login(res.data.body));
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -46,7 +53,7 @@ function Login(): ReactElement {
             className="input-base bg-blue-200"
             onClick={() => handleLogin()}
           >
-            <Link to="/">로그인</Link>
+            로그인
           </button>
           <hr />
           <button

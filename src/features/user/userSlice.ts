@@ -2,33 +2,51 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export interface userState {
-  value: boolean;
+  accessToken: string;
+  accessTokenTime: string;
+  grantType: string;
+  id: number;
+  memberEmail: string;
+  refreshToken: string;
+  refreshTokenTime: string;
 }
 
 const initialState: userState = {
-  value: false,
+  accessToken: "",
+  accessTokenTime: "",
+  grantType: "",
+  id: 0,
+  memberEmail: "",
+  refreshToken: "",
+  refreshTokenTime: "",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state) => {
-      // 1. 입력을 안함
-      // 2. 아이디 또는 비밀번호 틀림
-      // 3. 로그인 성공api 회신 이후
-      state.value = true;
+    login: (state, actions) => {
+      state.accessToken = actions.payload.accessToken;
+      state.accessTokenTime = actions.payload.accessTokenTime;
+      state.id = actions.payload.id;
+      state.memberEmail = actions.payload.memberEmail;
+      state.refreshToken = actions.payload.refreshToken;
+      state.refreshTokenTime = actions.payload.refreshTokenTime;
     },
     logout: (state) => {
-      // api 회신 이후
-      state.value = false;
+      state.accessToken = "";
+      state.accessTokenTime = "";
+      state.id = 0;
+      state.memberEmail = "";
+      state.refreshToken = "";
+      state.refreshTokenTime = "";
     },
   },
 });
 
 export const { login, logout } = userSlice.actions;
 
-export const selectUser = (state: RootState) => state.user.value;
+export const selectUser = (state: RootState) => state.user.id;
 
 export default userSlice.reducer;
 
