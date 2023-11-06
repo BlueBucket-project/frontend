@@ -24,7 +24,7 @@ function Login(): ReactElement {
         <Logo />
       </div>
       <div className="w-1/3 border p-10 text-center text-xl">
-        <div className="m-auto flex flex-col">
+        <div className="m-auto flex flex-col gap-5">
           <input
             type="text"
             id="id"
@@ -43,7 +43,7 @@ function Login(): ReactElement {
           />
           <button
             id="btn-login"
-            className="input-base bg-yellow-200"
+            className="input-base bg-blue-200"
             onClick={() => handleLogin()}
           >
             <Link to="/">로그인</Link>
@@ -51,13 +51,13 @@ function Login(): ReactElement {
           <hr />
           <button
             id="btn-register"
-            className="input-base bg-orange-200"
+            className="input-base bg-blue-100"
             onClick={() => navigate("/register")}
           >
             회원가입
           </button>
           <hr />
-          <div className="my-4">소셜 로그인</div>
+          <div className="mt-4 text-base">소셜 로그인</div>
           <div className="flex justify-center gap-2">
             <a href="#">
               <img src={naverLogin} alt="naver login" className="h-10" />

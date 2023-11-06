@@ -31,41 +31,54 @@ export default function Register(): ReactElement {
       <div className="mb-5 h-20 w-20">
         <Logo />
       </div>
-      <div className="w-1/3 border p-10 text-center text-xl">
-        <div className="m-auto flex flex-col">
-          <input
-            type="text"
-            id="id"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-            placeholder="아이디(이메일)"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
-          <input
-            type="name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="이름"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
-          <input
-            type="nickName"
-            id="nickName"
-            value={nickName}
-            onChange={(e) => setNickName(e.target.value)}
-            placeholder="닉네임"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
-          <div className="flex gap-4">
+      <div className="w-2/5 border p-10 text-center text-xl">
+        <div className="m-auto flex w-full flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">이메일</div>
+            <input
+              type="text"
+              id="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="이메일"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">비밀번호</div>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">이름</div>
+            <input
+              type="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">닉네임</div>
+            <input
+              type="nickName"
+              id="nickName"
+              value={nickName}
+              onChange={(e) => setNickName(e.target.value)}
+              placeholder="닉네임"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">우편번호</div>
             <input
               type="zipCode"
               id="zipCode"
@@ -75,7 +88,7 @@ export default function Register(): ReactElement {
               className="input-base grow border-gray-400 bg-gray-100 pl-3"
             />
             <button
-              className="input-base w-3/12 bg-amber-200"
+              className="input-base w-3/12 bg-blue-100"
               onClick={() => setIsModalOpened(!isModalOpened)}
             >
               주소 검색
@@ -92,26 +105,32 @@ export default function Register(): ReactElement {
               />
             </Popup>
           </div>
-          <input
-            type="addr"
-            id="addr"
-            value={addr}
-            onChange={(e) => setAddr(e.target.value)}
-            placeholder="주소"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
-          <input
-            type="addrDetail"
-            id="addrDetail"
-            value={addrDetail}
-            onChange={(e) => setAddrDetail(e.target.value)}
-            placeholder="상세 주소"
-            className="input-base border-gray-400 bg-gray-100 pl-3"
-          />
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">주소</div>
+            <input
+              type="addr"
+              id="addr"
+              value={addr}
+              onChange={(e) => setAddr(e.target.value)}
+              placeholder="주소"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-20 text-left">상세 주소</div>
+            <input
+              type="addrDetail"
+              id="addrDetail"
+              value={addrDetail}
+              onChange={(e) => setAddrDetail(e.target.value)}
+              placeholder="상세 주소"
+              className="input-base grow border-gray-400 bg-gray-100 pl-3"
+            />
+          </div>
           <hr />
           <button
             id="btn-register"
-            className="input-base bg-orange-200"
+            className="input-base bg-blue-200"
             onClick={() => handleRegister()}
           >
             회원가입
