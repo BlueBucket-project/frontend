@@ -23,7 +23,7 @@ export default function EditProfile(): ReactElement {
   return (
     <div>
       <div className="border-b pb-2 pl-4 text-3xl">내 정보 수정</div>
-      <div className="ml-10 mr-60 mt-8 flex flex-col text-xl">
+      <div className="mt-8 flex flex-col items-center text-xl">
         <div className="flex flex-col justify-start gap-8 pr-10">
           <div className="flex">
             <div className="w-48 pr-10">이메일</div>
@@ -73,7 +73,7 @@ export default function EditProfile(): ReactElement {
                 className="grow rounded border border-gray-400 bg-gray-100 pl-2"
               />
               <button
-                className="w-32 rounded border border-blue-400 bg-blue-300"
+                className="w-32 rounded border border-blue-300 bg-blue-200"
                 onClick={() => setIsModalOpened(!isModalOpened)}
               >
                 주소 검색
@@ -112,6 +112,12 @@ export default function EditProfile(): ReactElement {
             />
           </div>
         </div>
+        <button
+          className="mt-10 w-32 rounded bg-blue-300"
+          onClick={() => console.log("edit button clicked")}
+        >
+          수정하기
+        </button>
       </div>
     </div>
   );

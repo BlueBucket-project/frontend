@@ -13,7 +13,7 @@ import PostEdit from "./pages/PostEdit.tsx";
 import PostDetail from "./pages/PostDetail.tsx";
 import History from "./components/History.tsx";
 import EditProfile from "./components/EditProfile.tsx";
-import MyPost from "./components/MyPost.tsx";
+import MyInquiries from "./components/MyInquiries.tsx";
 import Withdrawal from "./components/Withdrawal.tsx";
 
 const router = createBrowserRouter([
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: "mypost",
-        element: <MyPost />,
+        element: <MyInquiries />,
       },
       {
         path: "edit",
