@@ -1,6 +1,7 @@
 import { redirect, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import fakeItemDB from "../fakeitemdb.json";
+import { useState } from "react";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -24,13 +25,60 @@ export default function ItemDetail() {
 
   const onClick = () => {};
 
+  const imgdata = [1, 2, 3];
+
+  const [focusedImg, setFocusedImg] = useState(0);
+
+  const nextImg = () => {
+    if (focusedImg < imgdata.length - 1) {
+      setFocusedImg(focusedImg + 1);
+    } else {
+      setFocusedImg(0);
+    }
+  };
+  const beforeImg = () => {
+    if (focusedImg > 0) {
+      setFocusedImg(focusedImg - 1);
+    } else {
+      setFocusedImg(imgdata.length);
+    }
+  };
+
   return (
     <>
       <Header />
       <div className="mx-auto mt-4 min-w-max max-w-5xl ">
         <div className="flex justify-start">
-          <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-            상세 대표 이미지
+          <div>
+            <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
+              {focusedImg + 1}
+              <div className="flex h-full w-full justify-between">
+                <button
+                  className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                  onClick={beforeImg}
+                >
+                  &lt;
+                </button>
+                <button
+                  className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                  onClick={nextImg}
+                >
+                  &gt;
+                </button>
+              </div>
+            </div>
+            <div className="my-4 flex">
+              {imgdata.map((item) => {
+                return (
+                  <div
+                    key={item}
+                    className="mr-4 h-16 w-16 rounded bg-blue-100"
+                  >
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="flex w-1/2 flex-col justify-between">
             <div className="mb-8 w-full text-3xl font-bold">
