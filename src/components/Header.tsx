@@ -4,7 +4,7 @@ import { useState } from "react";
 import Logo from "./Logo.tsx";
 
 function Header() {
-  const user = useAppSelector((state) => state.user.value);
+  const user = useAppSelector((state) => state.user.id);
   const [item, setItem] = useState("");
   const navigate = useNavigate();
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -39,7 +39,7 @@ function Header() {
           <button hidden></button>
         </form>
       </div>
-      {user ? (
+      {user !== 0 ? (
         <div className="flex h-full w-40 items-center justify-between">
           <Link to="/mypage">마이페이지</Link>
           <Link to="/cart">장바구니</Link>
