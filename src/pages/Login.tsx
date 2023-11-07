@@ -1,17 +1,26 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Logo from "../components/Logo.tsx";
 import naverLogin from "../../public/naverLogin.png";
 import googleLogin from "../../public/googleLogin.png";
 import { useAppDispatch } from "../app/hooks.ts";
 import { login } from "../features/user/userSlice.ts";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { instance } from "../api/index.ts";
+import { Link } from "react-router-dom";
 
 function Login(): ReactElement {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as { id: string; password: string };
+  useEffect(() => {
+    if (state) {
+      setId(state.id);
+      setPassword(state.password);
+    }
+  }, []);
 
   const handleLogin = () => {
     const body = { memberEmail: id, memberPw: password };
@@ -28,7 +37,9 @@ function Login(): ReactElement {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="mb-5 h-20 w-20">
-        <Logo />
+        <Link to={"/"}>
+          <Logo />
+        </Link>
       </div>
       <div className="w-1/3 border p-10 text-center text-xl">
         <div className="m-auto flex flex-col gap-5">

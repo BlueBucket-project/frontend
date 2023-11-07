@@ -2,6 +2,8 @@ import { ReactElement, useState } from "react";
 import Logo from "../components/Logo.tsx";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 import Popup from "reactjs-popup";
+//import { instance } from "../api/index.ts";
+import { useNavigate } from "react-router";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
@@ -15,8 +17,30 @@ export default function Register(): ReactElement {
   const [addrDetail, setAddrDetail] = useState<string>("");
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const handleRegister = () => {
-    //TODO: Implement me
+    /* const body = {
+      email: id,
+      memberAddress: {
+        memberAddr: addr,
+        memberAddrDetail: addrDetail,
+        memberZipCode: zipCode,
+      },
+      memberName: name,
+      memberPw: password,
+      memberRole: "ADMIN",
+      nickName: nickName,
+    };
+    instance.post("/users/", body).then((res) => {
+      if (res.data.statusCodeValue == 400) {
+        alert("이미 가입된 회원입니다.");
+      } else if (res.data.statusCodeValue == 200) {
+        alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
+        navigate("/login", { state: { id, password } });
+      }
+    }); */
+    navigate("/login", { state: { id, password } });
   };
 
   const onComplete = (data: Address) => {
