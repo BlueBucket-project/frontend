@@ -12,6 +12,7 @@ export default function ProductEditor({
 }: {
   initialProduct?: Product;
 }): ReactElement {
+  console.log(initialProduct || emptyProduct);
   const [product, setProduct] = useState<Product>(
     initialProduct || emptyProduct,
   );
@@ -34,13 +35,12 @@ export default function ProductEditor({
   return (
     <>
       <div className="flex h-screen flex-col">
-        <div
-          className="flex border-b py-2"
-          hidden={initialProduct !== undefined}
-        >
-          <div className="w-28">ID</div>
-          <div>{product.id}</div>
-        </div>
+        {initialProduct && (
+          <div className="flex border-b py-2">
+            <div className="w-28">ID</div>
+            <div>{product.id}</div>
+          </div>
+        )}
         <div className="flex border-b py-2">
           <div className="w-28">상품명</div>
           <input
