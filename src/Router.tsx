@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         element: <History />,
       },
       {
-        path: "mypost",
+        path: "inquiries",
         element: <MyInquiries />,
       },
       {
