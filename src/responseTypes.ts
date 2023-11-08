@@ -1,6 +1,6 @@
 export interface Item {
   itemDetail: string;
-  itemid: number;
+  itemId: number;
   itemImgList?: ItemImg[] | null;
   itemName: string;
   itemSellStatus: number;
@@ -9,7 +9,6 @@ export interface Item {
   regtime: string;
   sellPlace: string;
   stockNumber: number;
-  updateTime: string;
 }
 export interface ItemImg {
   itemid: number;
