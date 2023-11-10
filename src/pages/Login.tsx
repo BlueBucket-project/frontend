@@ -27,7 +27,10 @@ function Login(): ReactElement {
     instance.post("/users/login", body).then((res) => {
       if (res.data.statusCodeValue == 404) {
         alert("존재하지 않는 아이디입니다.");
-      } else if (res.data.statusCodeValue == 200) {
+      } else if (res.data.statusCodeValue == 400) {
+        alert("잘못된 비밀번호입니다.");
+        console.log(res);
+      } else {
         dispatch(login(res.data.body));
         navigate("/");
       }

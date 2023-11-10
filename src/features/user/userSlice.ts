@@ -32,6 +32,10 @@ const userSlice = createSlice({
       state.memberEmail = actions.payload.memberEmail;
       state.refreshToken = actions.payload.refreshToken;
       state.refreshTokenTime = actions.payload.refreshTokenTime;
+      localStorage.setItem(
+        "loggedInfo",
+        JSON.stringify(actions.payload.accessToken),
+      );
     },
     logout: (state) => {
       state.accessToken = "";

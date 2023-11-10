@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import Logo from "../components/Logo.tsx";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 import Popup from "reactjs-popup";
-//import { instance } from "../api/index.ts";
+import { instance } from "../api/index.ts";
 import { useNavigate } from "react-router";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
@@ -20,7 +20,7 @@ export default function Register(): ReactElement {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    /* const body = {
+    const body = {
       email: id,
       memberAddress: {
         memberAddr: addr,
@@ -39,8 +39,7 @@ export default function Register(): ReactElement {
         alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
         navigate("/login", { state: { id, password } });
       }
-    }); */
-    navigate("/login", { state: { id, password } });
+    });
   };
 
   const onComplete = (data: Address) => {
