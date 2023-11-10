@@ -1,23 +1,25 @@
 export interface Item {
-  itemDetail: string;
   itemId: number;
-  itemImgList?: ItemImg[] | null;
   itemName: string;
-  itemSellStatus: number;
-  memberNickName: string;
   price: number;
-  regtime: string;
-  sellPlace: string;
+  itemDetail: string;
+  itemSellStatus: number;
+  regTime: string;
+  memberNickName: string;
   stockNumber: number;
+  sellPlace: string;
+  itemReserver: boolean;
+  itemRamount: number;
+  itemImgList?: ItemImg[];
 }
 export interface ItemImg {
-  itemid: number;
   itemImgId: number;
-  oriImgName: string;
-  repImgYn: string;
   uploadImgName: string;
-  uploadImgPath: string;
+  oriImgName: string;
   uploadImgUrl: string;
+  uploadImgPath: string;
+  repImgYn: string;
+  item: number;
 }
 export interface Member {
   email: string;

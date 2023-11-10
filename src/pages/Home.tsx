@@ -1,6 +1,6 @@
 import Header from "../components/Header.tsx";
 import Card from "../components/Card.tsx";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { instance } from "../api/index.ts";
 import { Item } from "../responseTypes.ts";
 
@@ -8,9 +8,16 @@ interface Items extends Array<Item> {}
 
 function Home(): ReactElement {
   const [items, setItems] = useState<Items>([]);
-  instance.get("/items").then((res) => {
-    setItems(res.data.items);
-  });
+  useEffect(() => {
+    instance
+      .get("/items")
+      .then((res) => {
+        setItems(res.data.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <Header />
@@ -19,9 +26,13 @@ function Home(): ReactElement {
           <span>방금 올라왔어요</span>
         </div>
         <div className="mx-auto my-8 grid max-w-4xl grid-cols-3 gap-8">
-          {items.map((item) => {
-            return <Card item={item} key={item.itemId} />;
-          })}
+          {items && items.length > 0 ? (
+            items.map((item) => {
+              return <Card item={item} key={item.itemId} />;
+            })
+          ) : (
+            <div>상품이 없습니다</div>
+          )}
         </div>
       </div>
     </>

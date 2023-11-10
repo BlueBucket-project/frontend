@@ -1,17 +1,19 @@
-import { redirect, useParams } from "react-router-dom";
+import { redirect, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import fakeItemDB from "../fakeitemdb.json";
 import { useState } from "react";
+import { Item } from "../responseTypes";
+
+interface ItemProps {
+  item: Item;
+}
 
 export default function ItemDetail() {
   const { itemId } = useParams();
+  const location = useLocation();
+  const { item } = location.state as ItemProps;
+  console.log(item);
+
   if (typeof itemId == `undefined` || `null`) {
-    redirect("/");
-  }
-
-  const item = fakeItemDB.find((i) => i.itemid === +itemId!);
-
-  if (typeof item == `undefined` || `null`) {
     redirect("/");
   }
 
@@ -97,7 +99,7 @@ export default function ItemDetail() {
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">올라온 날짜</div>
-              <div>{item!.regtime.slice(0, 10)}</div>
+              <div>{item!.regTime.slice(0, 10)}</div>
             </div>
             <button
               className="mt-4 h-16 w-full rounded bg-sky-100"
@@ -117,7 +119,7 @@ export default function ItemDetail() {
         </div>
         <div className="mb-8" id="상세설명">
           <div className="my-4 text-lg font-semibold">판매자 상품 설명</div>
-          <div className="my-4">{item!.itemDetail}</div>
+          {/* <div className="my-4">{item!.itemDetail}</div> */}
         </div>
         <div className="my-4" id="QA">
           <div className="my-4 text-lg font-bold">Q&A</div>
