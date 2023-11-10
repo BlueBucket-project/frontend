@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const links = {
   history: "/mypage/history",
-  mypost: "/mypage/mypost",
+  inquiries: "/mypage/inquiries",
   edit: "/mypage/edit",
   withdrawal: "/mypage/withdrawal",
 };
@@ -16,8 +16,8 @@ export default function Sidebar({ path }: { path: string }): ReactElement {
             구매 이력
           </div>
         </Link>
-        <Link to={links.mypost}>
-          <div className={path === links.mypost ? "font-bold" : ""}>
+        <Link to={links.inquiries}>
+          <div className={path === links.inquiries ? "font-bold" : ""}>
             나의 문의
           </div>
         </Link>

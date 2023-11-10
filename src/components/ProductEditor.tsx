@@ -8,8 +8,10 @@ const emptyProduct: Product = {
   quantity: 0,
 };
 export default function ProductEditor({
+  isCreate,
   initialProduct,
 }: {
+  isCreate?: boolean;
   initialProduct?: Product;
 }): ReactElement {
   console.log(initialProduct || emptyProduct);
@@ -35,7 +37,7 @@ export default function ProductEditor({
   return (
     <>
       <div className="flex h-screen flex-col">
-        {initialProduct && (
+        {!isCreate && (
           <div className="flex border-b py-2">
             <div className="w-28">ID</div>
             <div>{product.id}</div>
@@ -88,7 +90,7 @@ export default function ProductEditor({
         </div>
         <div className="flex border-b py-2">
           <div className="w-28">상품 사진</div>
-          <div className="flex gap-2 pr-2">
+          <div className="flex gap-2">
             {images.map((imagePath, index) => (
               <img
                 key={`image_${index}`}
@@ -120,6 +122,24 @@ export default function ProductEditor({
               }}
             />
           </form>
+        </div>
+        <div className="mt-6 flex gap-4 self-end">
+          <button className="h-8 w-24 rounded bg-red-200">취소</button>
+          {isCreate ? (
+            <button
+              className="h-8 w-24 rounded bg-blue-200"
+              onClick={() => console.log("create")}
+            >
+              등록
+            </button>
+          ) : (
+            <button
+              className="h-8 w-24 rounded bg-blue-200"
+              onClick={() => console.log("edit")}
+            >
+              수정
+            </button>
+          )}
         </div>
       </div>
     </>

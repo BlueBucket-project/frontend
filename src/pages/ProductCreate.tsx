@@ -8,7 +8,7 @@ export default function ProductCreate(): ReactElement {
       <Header />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
         <div className="border-b pb-2 text-3xl">상품 관리</div>
-        <ProductEditor />
+        <ProductEditor isCreate={true} />
       </div>
     </div>
   );
