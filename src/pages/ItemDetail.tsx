@@ -1,21 +1,28 @@
-import { redirect, useLocation, useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { instanceH } from "../api";
+import { useAppSelector } from "../app/hooks";
 import { Item } from "../responseTypes";
-
-interface ItemProps {
-  item: Item;
-}
 
 export default function ItemDetail() {
   const { itemId } = useParams();
-  const location = useLocation();
-  const { item } = location.state as ItemProps;
-  console.log(item);
-
   if (typeof itemId == `undefined` || `null`) {
     redirect("/");
   }
+
+  const [item, setItem] = useState<Item>();
+
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+
+  useEffect(() => {
+    instanceH(accessToken)
+      .get(`/items/${itemId}`, { params: { page: 1 } })
+      .then((res) => {
+        setItem(res.data);
+        console.log(res);
+      });
+  }, []);
 
   function stockoption(SN: number) {
     const optionarr = [];
@@ -53,7 +60,6 @@ export default function ItemDetail() {
         <div className="flex justify-start">
           <div>
             <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-              {focusedImg + 1}
               <div className="flex h-full w-full justify-between">
                 <button
                   className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
