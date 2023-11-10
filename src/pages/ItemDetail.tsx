@@ -1,7 +1,9 @@
 import { redirect, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import fakeItemDB from "../fakeitemdb.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { instanceH } from "../api";
+import { useAppSelector } from "../app/hooks";
+import { Item } from "../responseTypes";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -9,11 +11,18 @@ export default function ItemDetail() {
     redirect("/");
   }
 
-  const item = fakeItemDB.find((i) => i.itemid === +itemId!);
+  const [item, setItem] = useState<Item>();
 
-  if (typeof item == `undefined` || `null`) {
-    redirect("/");
-  }
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+
+  useEffect(() => {
+    instanceH(accessToken)
+      .get(`/items/${itemId}`, { params: { page: 1 } })
+      .then((res) => {
+        setItem(res.data);
+        console.log(res);
+      });
+  }, []);
 
   function stockoption(SN: number) {
     const optionarr = [];
@@ -51,7 +60,6 @@ export default function ItemDetail() {
         <div className="flex justify-start">
           <div>
             <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-              {focusedImg + 1}
               <div className="flex h-full w-full justify-between">
                 <button
                   className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
@@ -97,7 +105,7 @@ export default function ItemDetail() {
             </div>
             <div className="mt-4 flex text-sm text-slate-600">
               <div className="w-24 ">올라온 날짜</div>
-              <div>{item!.regtime.slice(0, 10)}</div>
+              <div>{item!.regTime.slice(0, 10)}</div>
             </div>
             <button
               className="mt-4 h-16 w-full rounded bg-sky-100"
@@ -117,7 +125,7 @@ export default function ItemDetail() {
         </div>
         <div className="mb-8" id="상세설명">
           <div className="my-4 text-lg font-semibold">판매자 상품 설명</div>
-          <div className="my-4">{item!.itemDetail}</div>
+          {/* <div className="my-4">{item!.itemDetail}</div> */}
         </div>
         <div className="my-4" id="QA">
           <div className="my-4 text-lg font-bold">Q&A</div>
