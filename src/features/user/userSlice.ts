@@ -36,6 +36,7 @@ const userSlice = createSlice({
         "loggedInfo",
         JSON.stringify(actions.payload.accessToken),
       );
+      console.log(actions.payload.accessToken);
     },
     logout: (state) => {
       state.accessToken = "";

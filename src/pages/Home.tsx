@@ -13,6 +13,7 @@ function Home(): ReactElement {
       .get("/items")
       .then((res) => {
         setItems(res.data.items);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

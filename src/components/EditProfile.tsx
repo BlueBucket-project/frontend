@@ -1,6 +1,8 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
+import { instanceH } from "../api";
+import { useAppSelector } from "../app/hooks";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
@@ -19,6 +21,15 @@ export default function EditProfile(): ReactElement {
     setAddrDetail(data.buildingName);
     setIsModalOpened(false);
   };
+
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+  const memberId = useAppSelector((state) => state.user.id);
+
+  useEffect(() => {
+    instanceH(accessToken)
+      .get(`/users/${memberId}`)
+      .then((res) => console.log(res.data));
+  }, []);
 
   return (
     <div>

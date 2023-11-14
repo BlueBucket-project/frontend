@@ -37,6 +37,7 @@ export default function Register(): ReactElement {
         alert("이미 가입된 회원입니다.");
       } else if (res.data.statusCodeValue == 200) {
         alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
+        console.log(res.data);
         navigate("/login", { state: { id, password } });
       }
     });
