@@ -1,4 +1,4 @@
-interface Product {
+interface ProductLegacy {
   id?: number;
   name: string;
   price: number;
