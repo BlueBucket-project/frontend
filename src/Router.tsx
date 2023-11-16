@@ -33,7 +33,6 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />,
-    children: [{ path: ":item", element: "" }],
   },
   {
     path: "/item/:itemId",

@@ -18,7 +18,7 @@ function Header() {
     if (item === "") {
       navigate("/");
     } else {
-      navigate(`/search/${item}`);
+      navigate(`/search?itemName=${item}`);
     }
   };
   return (
