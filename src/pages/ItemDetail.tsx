@@ -28,12 +28,27 @@ export default function ItemDetail() {
   function stockoption(SN: number) {
     const optionarr = [];
     for (let i = 0; i < SN; i++) {
-      optionarr.push(<option key={i}>{i + 1}</option>);
+      optionarr.push(
+        <option key={i} value={i + 1}>
+          {i + 1}
+        </option>,
+      );
     }
     return optionarr;
   }
 
-  const onClick = () => {};
+  const [count, setCount] = useState("1");
+  const handlecount = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCount(e.target.value);
+  };
+
+  const onClick = () => {
+    instanceH(accessToken)
+      .post(`/cart`, { count, itemId })
+      .then(() => {
+        alert(`${count}개가 장바구니에 추가되었습니다.`);
+      });
+  };
 
   const imgdata = [1, 2, 3];
 
@@ -106,7 +121,9 @@ export default function ItemDetail() {
                 </div>
                 <div className="mt-4 flex text-sm text-slate-600">
                   <div className="w-24 ">개수</div>
-                  <select>{stockoption(item!.stockNumber)}</select>
+                  <select onChange={handlecount}>
+                    {stockoption(item!.stockNumber)}
+                  </select>
                 </div>
                 <div className="mt-4 flex text-sm text-slate-600">
                   <div className="w-24 ">올라온 날짜</div>
