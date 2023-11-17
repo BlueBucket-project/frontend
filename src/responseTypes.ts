@@ -38,3 +38,17 @@ export interface Address {
   memberAddrDetail: string;
   memberAddrEtc: string;
 }
+
+export interface ICartItem {
+  cart: {
+    cartId: number;
+    member: null;
+    cartItems: null;
+  };
+  cartItemId: number;
+  count: number;
+  item: Item;
+  mbrId: number;
+  price: number;
+  status: string;
+}

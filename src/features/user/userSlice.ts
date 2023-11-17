@@ -5,20 +5,20 @@ export interface userState {
   accessToken: string;
   accessTokenTime: string;
   grantType: string;
-  id: number;
   memberEmail: string;
   refreshToken: string;
   refreshTokenTime: string;
+  memberId:number;
 }
 
 const initialState: userState = {
   accessToken: "",
   accessTokenTime: "",
   grantType: "",
-  id: 0,
   memberEmail: "",
   refreshToken: "",
   refreshTokenTime: "",
+  memberId:0
 };
 
 const userSlice = createSlice({
@@ -28,29 +28,30 @@ const userSlice = createSlice({
     login: (state, actions) => {
       state.accessToken = actions.payload.accessToken;
       state.accessTokenTime = actions.payload.accessTokenTime;
-      state.id = actions.payload.id;
       state.memberEmail = actions.payload.memberEmail;
       state.refreshToken = actions.payload.refreshToken;
       state.refreshTokenTime = actions.payload.refreshTokenTime;
+      state.memberId = actions.payload.memberId
       localStorage.setItem(
         "loggedInfo",
         JSON.stringify(actions.payload.accessToken),
       );
+      console.log(actions.payload.accessToken);
     },
     logout: (state) => {
       state.accessToken = "";
       state.accessTokenTime = "";
-      state.id = 0;
       state.memberEmail = "";
       state.refreshToken = "";
       state.refreshTokenTime = "";
+      state.memberId = 0
     },
   },
 });
 
 export const { login, logout } = userSlice.actions;
 
-export const selectUser = (state: RootState) => state.user.id;
+export const selectUser = (state: RootState) => state.user.memberId;
 
 export default userSlice.reducer;
 

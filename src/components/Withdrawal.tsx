@@ -1,10 +1,18 @@
 import { ReactElement, useState } from "react";
 import Popup from "reactjs-popup";
+import { instanceH } from "../api";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { logout } from "../features/user/userSlice";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
 export default function Withdrawal(): ReactElement {
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+  const memberId = useAppSelector((state) => state.user.memberId);
+  const dispatch = useAppDispatch();
+
   return (
     <div>
       <div className="border-b pb-2 pl-4 text-3xl">회원 탈퇴</div>
@@ -26,7 +34,15 @@ export default function Withdrawal(): ReactElement {
             <button
               className="w-32 rounded bg-red-300"
               onClick={() => {
-                console.log("withdrawal clicked");
+                instanceH(accessToken)
+                  .delete(`/users/${memberId}`)
+                  .then((res) => {
+                    console.log(res);
+                    console.log("탈퇴되었습니다.");
+                    dispatch(logout());
+                    alert("탈퇴되었습니다.");
+                    window.location.href = "/";
+                  });
                 setIsModalOpened(false);
               }}
             >

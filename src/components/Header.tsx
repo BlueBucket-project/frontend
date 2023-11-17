@@ -4,7 +4,7 @@ import { useState } from "react";
 import Logo from "./Logo.tsx";
 
 function Header() {
-  const user = useAppSelector((state) => state.user.id);
+  const user = useAppSelector((state) => state.user.memberId);
   const [item, setItem] = useState("");
   const navigate = useNavigate();
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -18,7 +18,7 @@ function Header() {
     if (item === "") {
       navigate("/");
     } else {
-      navigate(`/search/${item}`);
+      navigate(`/search?itemName=${item}`);
     }
   };
   return (

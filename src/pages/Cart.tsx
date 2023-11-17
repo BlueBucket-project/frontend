@@ -1,6 +1,36 @@
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
+import { ICartItem } from "../responseTypes";
+import { instanceH } from "../api";
+import { useAppSelector } from "../app/hooks";
+import { CartItem } from "../components/CartItem";
+
+interface ICartItems extends Array<ICartItem> {}
 
 export default function Cart() {
+  const [list, setList] = useState<ICartItems>([]);
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+
+  useEffect(() => {
+    instanceH(accessToken)
+      .get("/cart")
+      .then((res) => {
+        setList(res.data.items);
+      });
+  }, []);
+
+  const allItemReserve = () => {
+    const allItemId: any[] = [];
+    list.map((item) => {
+      allItemId.push({ cartItemId: item.cartItemId });
+    });
+    instanceH(accessToken)
+      .post("/cart/orderItems", allItemId)
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <>
       <Header />
@@ -12,47 +42,15 @@ export default function Cart() {
           </select>
         </div>
         <div className="">
-          <div className="flex h-40 w-full items-center justify-between border-b py-8">
-            <div>
-              <input type="checkbox"></input>
-            </div>
-            <div className="h-28 w-28 rounded-lg bg-blue-100 ">이미지</div>
-            <div className="flex-col justify-between ">
-              <div className="mb-4 w-96">
-                매우 긴 상품이름의 칸을 나타내기 위하여 작성된 길이 여기서 더
-                길어지면 아래로 내려감
-              </div>
-              <div>10,000원</div>
-            </div>
-            <div>개수 선택</div>
-            <div>최종 가격</div>
-            <div className="flex flex-col items-end">
-              <button className="mb-4">X</button>
-              <button>선택구매예약</button>
-            </div>
-          </div>
-          <div className="flex h-40 w-full items-center justify-between border-b py-8">
-            <div>
-              <input type="checkbox"></input>
-            </div>
-            <div className="h-28 w-28 rounded-lg bg-blue-100 ">이미지</div>
-            <div className="flex-col justify-between ">
-              <div className="mb-4 w-96">
-                매우 긴 상품이름의 칸을 나타내기 위하여 작성된 길이 여기서 더
-                길어지면 아래로 내려감
-              </div>
-              <div>10,000원</div>
-            </div>
-            <div>개수 선택</div>
-            <div>최종 가격</div>
-            <div className="flex flex-col items-end">
-              <button className="mb-4">X</button>
-              <button>선택구매예약</button>
-            </div>
-          </div>
+          {list.map((item) => {
+            return <CartItem key={item.cartItemId} item={item} />;
+          })}
         </div>
         <div className="mt-8 w-full">
-          <button className="mx-auto block rounded-lg border bg-blue-100 p-4">
+          <button
+            onClick={allItemReserve}
+            className="mx-auto block rounded-lg border bg-blue-100 p-4"
+          >
             전체구매예약
           </button>
         </div>
@@ -60,6 +58,3 @@ export default function Cart() {
     </>
   );
 }
-
-// 개수선택은 아이템 디테일 참고
-// 최종가격은 개수 선택 후 계산하여 집계
