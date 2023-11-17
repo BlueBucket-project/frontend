@@ -28,7 +28,7 @@ export default function EditProfile(): ReactElement {
   const memberId = useAppSelector((state) => state.user.memberId);
   const dispatch = useAppDispatch();
 
-  if (memberId === 0) {
+  if (memberId === -1) {
     window.location.href = "/";
   }
 
