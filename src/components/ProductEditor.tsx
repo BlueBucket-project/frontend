@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const emptyProduct: Product = {
+const emptyProduct: ProductLegacy = {
   name: "",
   price: 0,
   quantity: 0,
@@ -12,10 +12,10 @@ export default function ProductEditor({
   initialProduct,
 }: {
   isCreate?: boolean;
-  initialProduct?: Product;
+  initialProduct?: ProductLegacy;
 }): ReactElement {
   console.log(initialProduct || emptyProduct);
-  const [product, setProduct] = useState<Product>(
+  const [product, setProduct] = useState<ProductLegacy>(
     initialProduct || emptyProduct,
   );
   const [images, setImages] = useState<any[]>([]);

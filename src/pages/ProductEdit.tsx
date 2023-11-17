@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header.tsx";
 import ProductEditor from "../components/ProductEditor.tsx";
 
-const sampleProduct: Product = {
+const sampleProduct: ProductLegacy = {
   id: 1,
   name: "아이패드",
   price: 200000,
@@ -12,7 +12,8 @@ const sampleProduct: Product = {
 
 export default function ProductEdit(): ReactElement {
   const { productId } = useParams();
-  const [initialProduct, setInitialProduct] = useState<Product>(sampleProduct);
+  const [initialProduct, setInitialProduct] =
+    useState<ProductLegacy>(sampleProduct);
 
   useEffect(() => {
     // validate product id
