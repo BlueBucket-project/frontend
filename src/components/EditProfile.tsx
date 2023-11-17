@@ -80,7 +80,7 @@ export default function EditProfile(): ReactElement {
       instanceH(accessToken)
         .put(`/users/${memberId}`, body)
         .then(() => {
-          alert("비밀번호가 바뀌었습니다. 메인 화면으로 이동합니다.");
+          alert("비밀번호가 바뀌었습니다. 바뀐 비밀번호로 다시 로그인해주세요. 메인 화면으로 이동합니다.");
           dispatch(logout());
         });
     }
