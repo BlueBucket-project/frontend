@@ -34,3 +34,5 @@ interface ItemImg {
   repImgYn: string;
   item: null;
 }
+
+type ProductStatus = "RESERVED" | "SELL" | "SOLD_OUT";
