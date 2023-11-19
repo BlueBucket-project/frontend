@@ -52,3 +52,23 @@ export interface ICartItem {
   price: number;
   status: string;
 }
+
+export interface IBoardList {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  items: IBoardItem[];
+  nowPageNumber: number;
+  pageSize: number;
+  totalPage: number;
+}
+
+export interface IBoardItem {
+  boardId: string;
+  boardSecret: string;
+  title: string;
+  content: string;
+  nickName: string;
+  regTime: string;
+}

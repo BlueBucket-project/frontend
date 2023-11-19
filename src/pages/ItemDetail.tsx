@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
-import { Item } from "../responseTypes";
+import { IBoardList, Item } from "../responseTypes";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -12,17 +12,31 @@ export default function ItemDetail() {
   }
 
   const [item, setItem] = useState<Item>();
+  const [board, setBoard] = useState<IBoardList>();
   const [loading, setLoading] = useState(true);
+  const [isfold, setIsfold] = useState(true);
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
 
-  useEffect(() => {
+  function getItemDetailData() {
     instanceH(accessToken)
       .get(`/items/${itemId}`, { params: { page: 1 } })
       .then((res) => {
         setItem(res.data);
         setLoading(false);
       });
+  }
+  function getBoardData() {
+    instanceH(accessToken)
+      .get(`/${itemId}/boards`)
+      .then((res) => {
+        setBoard(res.data);
+      });
+  }
+
+  useEffect(() => {
+    getItemDetailData();
+    getBoardData();
   }, []);
 
   function stockoption(SN: number) {
@@ -48,6 +62,12 @@ export default function ItemDetail() {
       .then(() => {
         alert(`${count}개가 장바구니에 추가되었습니다.`);
       });
+  };
+
+  const postqna = () => {
+    instanceH(accessToken)
+      .post(`/${itemId}/boards`)
+      .then((res) => console.log(res));
   };
 
   const imgdata = [1, 2, 3];
@@ -151,18 +171,51 @@ export default function ItemDetail() {
             </div>
             <div className="my-4" id="QA">
               <div className="my-4 text-lg font-bold">Q&A</div>
-              <div className="border-y border-b border-t-2 border-b-gray-400 border-t-black">
+              <div className="border-y border-t-2 border-t-black">
                 <div className="grid grid-cols-10 border-b border-b-gray-400 py-4 text-center">
                   <div>답변상태</div>
                   <div className="col-span-7 col-start-2">문의 내용</div>
                   <div>작성자</div>
                   <div>작성일</div>
                 </div>
-                <div className="my-4 text-center">문의 사항이 없습니다.</div>
+                {board && board.items.length > 0 ? (
+                  board.items.map((item) => {
+                    return (
+                      <div className="grid grid-cols-10  border-b border-b-gray-400 py-4 text-center">
+                        <div>답변상태</div>
+                        <div className="col-span-7 col-start-2 text-left">
+                          {item.content}
+                        </div>
+                        <div>{item.nickName.replace(/(?<=.{2})./gi, "*")}</div>
+                        <div>{item.regTime.slice(0, 10)}</div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="my-4 text-center">문의 사항이 없습니다.</div>
+                )}
               </div>
-              <button className="my-4 rounded-lg bg-blue-50 p-2">
-                문의하기
-              </button>
+              {isfold ? (
+                <button
+                  onClick={() => setIsfold(!isfold)}
+                  className="my-4 rounded-lg bg-blue-50 p-2"
+                >
+                  문의하기
+                </button>
+              ) : (
+                <div>
+                  <div>
+                    <form>
+                      <input type="text" />
+                      <input type="text" />
+                    </form>
+                  </div>
+                  <div>
+                    <button onClick={postqna}>등록하기</button>
+                    <button onClick={() => setIsfold(!isfold)}>취소하기</button>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
