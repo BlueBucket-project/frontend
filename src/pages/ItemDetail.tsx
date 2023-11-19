@@ -15,6 +15,8 @@ export default function ItemDetail() {
   const [board, setBoard] = useState<IBoardList>();
   const [loading, setLoading] = useState(true);
   const [isfold, setIsfold] = useState(true);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
 
@@ -65,9 +67,16 @@ export default function ItemDetail() {
   };
 
   const postqna = () => {
+    const body = { title, content };
     instanceH(accessToken)
-      .post(`/${itemId}/boards`)
-      .then((res) => console.log(res));
+      .post(`/${itemId}/boards`, body)
+      .then(() => {
+        getBoardData();
+        setTitle("");
+        setContent("");
+        setIsfold(true);
+        alert("문의가 등록되었습니다.");
+      });
   };
 
   const imgdata = [1, 2, 3];
@@ -205,14 +214,38 @@ export default function ItemDetail() {
               ) : (
                 <div>
                   <div>
-                    <form>
-                      <input type="text" />
-                      <input type="text" />
+                    <form className="flex flex-col">
+                      <input
+                        className="mt-4 outline outline-1  outline-offset-2"
+                        placeholder="문의 제목"
+                        type="text"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <input
+                        className="mt-4 outline outline-1 outline-offset-2"
+                        placeholder="문의 내용"
+                        type="text"
+                        id="content"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                      />
                     </form>
-                  </div>
-                  <div>
-                    <button onClick={postqna}>등록하기</button>
-                    <button onClick={() => setIsfold(!isfold)}>취소하기</button>
+                    <div className="mt-4">
+                      <button
+                        className="rounded-4 mr-4 bg-blue-100 p-4"
+                        onClick={postqna}
+                      >
+                        등록하기
+                      </button>
+                      <button
+                        className="rounded-4 bg-red-100 p-4"
+                        onClick={() => setIsfold(!isfold)}
+                      >
+                        취소하기
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
