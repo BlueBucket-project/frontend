@@ -2,24 +2,23 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.tsx";
 import ProductEditor from "../components/ProductEditor.tsx";
-
-const sampleProduct: ProductLegacy = {
-  id: 1,
-  name: "아이패드",
-  price: 200000,
-  quantity: 3,
-};
+import { instance } from "../api";
+import { emptyProduct } from "./emptyProduct.ts";
 
 export default function ProductEdit(): ReactElement {
   const { productId } = useParams();
-  const [initialProduct, setInitialProduct] =
-    useState<ProductLegacy>(sampleProduct);
+  const [initialProduct, setInitialProduct] = useState<Product>(emptyProduct);
 
   useEffect(() => {
-    // validate product id
-    // call backend api to get product info
-    // set initialProduct
+    //TODO: validate product id
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    await instance
+      .get(`/items/${productId}`)
+      .then((res) => setInitialProduct(res.data));
+  };
 
   return (
     <div>
