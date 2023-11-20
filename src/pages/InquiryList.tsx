@@ -13,7 +13,6 @@ export default function InquiryList(): ReactElement {
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
-  const [filterUnanswered, setFilterUnanswered] = useState<boolean>(false);
   const [selectedInquiryIndex, setSelectedInquiryIndex] = useState<number>(-1);
   const [commentsText, setCommentsText] = useState<string[]>([]);
   const accessToken = useAppSelector((state) => state.user.accessToken);
@@ -35,7 +34,7 @@ export default function InquiryList(): ReactElement {
 
   useEffect(() => {
     refreshInquiries();
-  }, [page, filterUnanswered]);
+  }, [page]);
 
   const postComment = (itemId: number, boardId: number) => {
     instanceH(accessToken)
@@ -59,16 +58,8 @@ export default function InquiryList(): ReactElement {
     <>
       <Header />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
-        <div className="flex max-w-5xl items-end justify-between border-b-2 border-black pb-2 text-3xl">
+        <div className="flex max-w-5xl border-b-2 border-black pb-2 text-3xl">
           <div>상품 문의</div>
-          <div className="flex gap-2">
-            <input
-              type="checkbox"
-              checked={filterUnanswered}
-              onChange={() => setFilterUnanswered(!filterUnanswered)}
-            />
-            <div className="text-base">답변 미완료만 보기</div>
-          </div>
         </div>
         <div className="grid grid-cols-7 border-b border-black text-center">
           <div className="col-span-1">답변상태</div>
