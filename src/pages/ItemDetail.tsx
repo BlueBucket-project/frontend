@@ -3,7 +3,8 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
-import { Item } from "../responseTypes";
+import { IBoardList, Item } from "../responseTypes";
+import { QNABoard } from "../components/QNABoard";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -12,17 +13,34 @@ export default function ItemDetail() {
   }
 
   const [item, setItem] = useState<Item>();
+  const [board, setBoard] = useState<IBoardList>();
   const [loading, setLoading] = useState(true);
+  const [isfold, setIsfold] = useState(true);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
+  const email = useAppSelector((state) => state.user.memberEmail);
 
-  useEffect(() => {
+  function getItemDetailData() {
     instanceH(accessToken)
       .get(`/items/${itemId}`, { params: { page: 1 } })
       .then((res) => {
         setItem(res.data);
         setLoading(false);
       });
+  }
+  function getBoardData() {
+    instanceH(accessToken)
+      .get(`/${itemId}/boards`, { params: { email } })
+      .then((res) => {
+        setBoard(res.data);
+      });
+  }
+
+  useEffect(() => {
+    getItemDetailData();
+    getBoardData();
   }, []);
 
   function stockoption(SN: number) {
@@ -50,7 +68,24 @@ export default function ItemDetail() {
       });
   };
 
-  const imgdata = [1, 2, 3];
+  const postqna = () => {
+    const body = { title, content };
+    instanceH(accessToken)
+      .post(`/${itemId}/boards`, body)
+      .then(() => {
+        getBoardData();
+        setTitle("");
+        setContent("");
+        setIsfold(true);
+        alert("문의가 등록되었습니다.");
+      });
+  };
+
+  function handleRender() {
+    getBoardData();
+  }
+
+  const imgdata = item?.itemImgList || [];
 
   const [focusedImg, setFocusedImg] = useState(0);
 
@@ -65,7 +100,7 @@ export default function ItemDetail() {
     if (focusedImg > 0) {
       setFocusedImg(focusedImg - 1);
     } else {
-      setFocusedImg(imgdata.length);
+      setFocusedImg(imgdata.length - 1);
     }
   };
 
@@ -80,15 +115,20 @@ export default function ItemDetail() {
             <div className="flex justify-start">
               <div>
                 <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-                  <div className="flex h-full w-full justify-between">
+                  <div className="relative flex h-full w-full justify-between">
+                    {imgdata && imgdata.length > 0 ? (
+                      <img src={imgdata[focusedImg].uploadImgUrl} />
+                    ) : (
+                      "이미지가 없습니다."
+                    )}
                     <button
-                      className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                      className="absolute left-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
                       onClick={beforeImg}
                     >
                       &lt;
                     </button>
                     <button
-                      className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                      className="absolute right-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
                       onClick={nextImg}
                     >
                       &gt;
@@ -99,10 +139,13 @@ export default function ItemDetail() {
                   {imgdata.map((item) => {
                     return (
                       <div
-                        key={item}
+                        key={item.itemImgId}
                         className="mr-4 h-16 w-16 rounded bg-blue-100"
                       >
-                        {item}
+                        <img
+                          className="h-full w-full"
+                          src={item.uploadImgUrl}
+                        />
                       </div>
                     );
                   })}
@@ -151,18 +194,74 @@ export default function ItemDetail() {
             </div>
             <div className="my-4" id="QA">
               <div className="my-4 text-lg font-bold">Q&A</div>
-              <div className="border-y border-b border-t-2 border-b-gray-400 border-t-black">
+              <div className="border-y border-t-2 border-t-black">
                 <div className="grid grid-cols-10 border-b border-b-gray-400 py-4 text-center">
                   <div>답변상태</div>
                   <div className="col-span-7 col-start-2">문의 내용</div>
                   <div>작성자</div>
                   <div>작성일</div>
                 </div>
-                <div className="my-4 text-center">문의 사항이 없습니다.</div>
+                {board && board.items.length > 0 ? (
+                  board.items.map((item) => {
+                    return (
+                      <>
+                        <QNABoard
+                          key={item.boardId}
+                          item={item}
+                          rerender={handleRender}
+                        />
+                      </>
+                    );
+                  })
+                ) : (
+                  <div className="my-4 text-center">문의 사항이 없습니다.</div>
+                )}
               </div>
-              <button className="my-4 rounded-lg bg-blue-50 p-2">
-                문의하기
-              </button>
+              {isfold ? (
+                <button
+                  onClick={() => setIsfold(!isfold)}
+                  className="my-4 rounded-lg bg-blue-50 p-2"
+                >
+                  문의하기
+                </button>
+              ) : (
+                <div>
+                  <div>
+                    <form className="flex flex-col">
+                      <input
+                        className="mt-4 outline outline-1  outline-offset-2"
+                        placeholder="문의 제목"
+                        type="text"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <input
+                        className="mt-4 outline outline-1 outline-offset-2"
+                        placeholder="문의 내용"
+                        type="text"
+                        id="content"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                      />
+                    </form>
+                    <div className="mt-4">
+                      <button
+                        className="rounded-4 mr-4 bg-blue-100 p-4"
+                        onClick={postqna}
+                      >
+                        등록하기
+                      </button>
+                      <button
+                        className="rounded-4 bg-red-100 p-4"
+                        onClick={() => setIsfold(!isfold)}
+                      >
+                        취소하기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
