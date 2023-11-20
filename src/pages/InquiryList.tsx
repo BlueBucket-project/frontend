@@ -50,9 +50,7 @@ export default function InquiryList(): ReactElement {
     boardId: number,
     commentId: number,
   ) => {
-    instanceH(
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb293aW5AZ21haWwuY29tIiwiYXV0aCI6WyJST0xFX0FETUlOIl0sImV4cCI6MTcwMzgyMTM1N30.km5fVZ2Xeo3TsqrCRvGgtaVgASKtcUtVL2FT_w6Elew",
-    )
+    instanceH(accessToken)
       .delete(`/${itemId}/boards/${boardId}/comments/${commentId}`)
       .then(() => refreshInquiries());
   };
