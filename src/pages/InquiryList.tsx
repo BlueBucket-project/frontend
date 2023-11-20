@@ -61,7 +61,7 @@ export default function InquiryList(): ReactElement {
         <div className="flex max-w-5xl border-b-2 border-black pb-2 text-3xl">
           <div>상품 문의</div>
         </div>
-        <div className="grid grid-cols-7 border-b border-black text-center">
+        <div className="grid h-10 grid-cols-7 border-b border-black text-center leading-10">
           <div className="col-span-1">답변상태</div>
           <div className="col-span-4">제목</div>
           <div className="col-span-1">작성자</div>
