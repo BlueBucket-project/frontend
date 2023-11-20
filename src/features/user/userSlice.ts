@@ -1,42 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-export interface userState {
-  accessToken: string;
-  accessTokenTime: string;
-  grantType: string;
-  memberEmail: string;
-  refreshToken: string;
-  refreshTokenTime: string;
-  memberId:number;
-}
-
-const initialState: userState = {
+const initialState: UserState = {
   accessToken: "",
   accessTokenTime: "",
   grantType: "",
   memberEmail: "",
   refreshToken: "",
   refreshTokenTime: "",
-  memberId:0
+  memberId: -1,
+  role: "ROLE_USER",
 };
+
+const parseJwt = (token: string) => {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(""),
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
+export { parseJwt };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     login: (state, actions) => {
-      state.accessToken = actions.payload.accessToken;
+      const accessToken = actions.payload.accessToken;
+      state.accessToken = accessToken;
       state.accessTokenTime = actions.payload.accessTokenTime;
       state.memberEmail = actions.payload.memberEmail;
       state.refreshToken = actions.payload.refreshToken;
       state.refreshTokenTime = actions.payload.refreshTokenTime;
-      state.memberId = actions.payload.memberId
+      state.memberId = actions.payload.memberId;
+      const parsedJwt = parseJwt(accessToken);
+      state.role = parsedJwt.auth[0];
+
+      // TODO: Remove codes for test
       localStorage.setItem(
         "loggedInfo",
         JSON.stringify(actions.payload.accessToken),
       );
-      console.log(actions.payload.accessToken);
     },
     logout: (state) => {
       state.accessToken = "";
@@ -44,7 +56,7 @@ const userSlice = createSlice({
       state.memberEmail = "";
       state.refreshToken = "";
       state.refreshTokenTime = "";
-      state.memberId = 0
+      state.memberId = -1;
     },
   },
 });

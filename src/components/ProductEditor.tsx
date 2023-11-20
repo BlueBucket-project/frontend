@@ -201,9 +201,8 @@ export default function ProductEditor({
           <div className="w-28">상품 사진</div>
           <div className={`flex gap-2 ${images.length > 0 ? "mr-2" : ""}`}>
             {images.map((imagePath, index) => (
-              <div className="relative">
+              <div className="relative" key={`image_${index}`}>
                 <img
-                  key={`image_${index}`}
                   src={imagePath.imgPath}
                   alt={`image_${index}`}
                   className="h-20 w-20"

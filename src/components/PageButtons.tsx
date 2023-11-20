@@ -9,10 +9,10 @@ export default function PageButtons({
   totalPage: number;
   onClickPage: (i: number) => void;
 }): ReactElement {
-  const arr = Array.from(Array(totalPage));
+  const arr = Array.from({ length: totalPage }, (_, i) => i + 1);
   return (
     <div className="mx-auto mt-10 flex justify-center text-center">
-      {arr.map((_, i) => (
+      {arr.map((i) => (
         <div
           key={`page_${i}`}
           className={`h-10 w-10 rounded border border-b leading-10 hover:cursor-pointer ${
@@ -20,7 +20,7 @@ export default function PageButtons({
           }`}
           onClick={() => onClickPage(i)}
         >
-          {i + 1}
+          {i}
         </div>
       ))}
     </div>
