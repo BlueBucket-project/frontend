@@ -32,7 +32,7 @@ function Login(): ReactElement {
         console.log(res);
       } else {
         dispatch(login(res.data.body));
-        navigate(-1);
+        navigate("/");
       }
     });
   };

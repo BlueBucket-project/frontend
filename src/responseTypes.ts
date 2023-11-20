@@ -67,8 +67,17 @@ export interface IBoardList {
 export interface IBoardItem {
   boardId: string;
   boardSecret: string;
-  title: string;
+  commentDTOList: commentDTO[];
   content: string;
+  itemId: number;
   nickName: string;
   regTime: string;
+  replyStatus: string;
+  title: string;
+}
+
+export interface commentDTO {
+  comment: string;
+  commentId: number;
+  writeTime: string;
 }

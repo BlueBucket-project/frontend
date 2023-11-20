@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
 import { IBoardList, Item } from "../responseTypes";
+import { QNABoard } from "../components/QNABoard";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -19,6 +20,7 @@ export default function ItemDetail() {
   const [content, setContent] = useState("");
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
+  const email = useAppSelector((state) => state.user.memberEmail);
 
   function getItemDetailData() {
     instanceH(accessToken)
@@ -30,7 +32,7 @@ export default function ItemDetail() {
   }
   function getBoardData() {
     instanceH(accessToken)
-      .get(`/${itemId}/boards`)
+      .get(`/${itemId}/boards`, { params: { email } })
       .then((res) => {
         setBoard(res.data);
       });
@@ -79,7 +81,11 @@ export default function ItemDetail() {
       });
   };
 
-  const imgdata = [1, 2, 3];
+  function handleRender() {
+    getBoardData();
+  }
+
+  const imgdata = item?.itemImgList || [];
 
   const [focusedImg, setFocusedImg] = useState(0);
 
@@ -109,15 +115,15 @@ export default function ItemDetail() {
             <div className="flex justify-start">
               <div>
                 <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-                  <div className="flex h-full w-full justify-between">
+                  <div className="relative flex h-full w-full justify-between">
                     <button
-                      className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                      className="absolute left-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
                       onClick={beforeImg}
                     >
                       &lt;
                     </button>
                     <button
-                      className="my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
+                      className="absolute right-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
                       onClick={nextImg}
                     >
                       &gt;
@@ -128,10 +134,13 @@ export default function ItemDetail() {
                   {imgdata.map((item) => {
                     return (
                       <div
-                        key={item}
+                        key={item.itemImgId}
                         className="mr-4 h-16 w-16 rounded bg-blue-100"
                       >
-                        {item}
+                        <img
+                          className="h-full w-full"
+                          src={item.uploadImgUrl}
+                        />
                       </div>
                     );
                   })}
@@ -190,14 +199,13 @@ export default function ItemDetail() {
                 {board && board.items.length > 0 ? (
                   board.items.map((item) => {
                     return (
-                      <div className="grid grid-cols-10  border-b border-b-gray-400 py-4 text-center">
-                        <div>답변상태</div>
-                        <div className="col-span-7 col-start-2 text-left">
-                          {item.content}
-                        </div>
-                        <div>{item.nickName.replace(/(?<=.{2})./gi, "*")}</div>
-                        <div>{item.regTime.slice(0, 10)}</div>
-                      </div>
+                      <>
+                        <QNABoard
+                          key={item.boardId}
+                          item={item}
+                          rerender={handleRender}
+                        />
+                      </>
                     );
                   })
                 ) : (
