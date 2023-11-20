@@ -59,6 +59,11 @@ function Login(): ReactElement {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
             placeholder="비밀번호"
             className="input-base border-gray-400 bg-gray-100 pl-3"
           />
