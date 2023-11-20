@@ -10,7 +10,7 @@ const links = {
 export default function Sidebar({ path }: { path: string }): ReactElement {
   return (
     <div className="mr-8 flex items-start justify-end pt-20">
-      <div className="flex w-32 flex-col gap-3 rounded-xl border py-4 pl-4">
+      <div className="flex w-32 flex-col gap-3 rounded-xl border border-gray-400 py-4 pl-4">
         <Link to={links.history}>
           <div className={path === links.history ? "font-bold" : ""}>
             구매 이력
