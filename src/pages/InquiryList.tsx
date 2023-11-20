@@ -3,6 +3,7 @@ import Header from "../components/Header.tsx";
 import {
   faChevronRight,
   faCircleXmark,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { instanceH } from "../api";
@@ -15,11 +16,13 @@ export default function InquiryList(): ReactElement {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [selectedInquiryIndex, setSelectedInquiryIndex] = useState<number>(-1);
   const [commentsText, setCommentsText] = useState<string[]>([]);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [editText, setEditText] = useState<string>("");
   const accessToken = useAppSelector((state) => state.user.accessToken);
 
   const refreshInquiries = () => {
     instanceH(accessToken)
-      .get("/admins/boards")
+      .get(`/admins/boards?page=${page}`)
       .then((res) => {
         const inquiriesResponse: InquiriesResponse = res.data;
         setTotalPage(inquiriesResponse.totalPage);
@@ -42,6 +45,17 @@ export default function InquiryList(): ReactElement {
         comment: commentsText[selectedInquiryIndex],
       })
       .then(() => refreshInquiries());
+  };
+
+  const editComment = (itemId: number, boardId: number, commentId: number) => {
+    instanceH(accessToken)
+      .put(`/${itemId}/boards/${boardId}/comments/${commentId}`, {
+        comment: editText,
+      })
+      .then(() => {
+        setIsEdit(false);
+        refreshInquiries();
+      });
   };
 
   const deleteComment = (
@@ -77,6 +91,7 @@ export default function InquiryList(): ReactElement {
               <div
                 className="col-span-4 flex flex-col gap-2 place-self-start self-center justify-self-stretch whitespace-pre-line break-all"
                 onClick={() => {
+                  setIsEdit(false);
                   if (selectedInquiryIndex === index) {
                     setSelectedInquiryIndex(-1);
                     return;
@@ -100,35 +115,79 @@ export default function InquiryList(): ReactElement {
               </div>
             </div>
             <div hidden={selectedInquiryIndex !== index}>
-              <div className="grid max-w-5xl grid-cols-7 border-b border-gray-400 py-2">
+              <div className="grid max-w-5xl grid-cols-7 border-b border-gray-400">
                 {inquiry.commentDTOList.length > 0 ? (
                   <div className="col-start-2 col-end-6 flex flex-col gap-2">
                     {inquiry.commentDTOList.map((c: Comment) => (
                       <div
-                        className="flex whitespace-pre-line break-all border-b border-gray-300 pb-2"
+                        className="flex whitespace-pre-line break-all border-b border-gray-300 py-2"
                         key={`comment_${c.commentId}`}
                       >
                         <FontAwesomeIcon
                           className="mr-4 mt-1"
                           icon={faChevronRight}
                         />
-                        <div className="grow">{c.comment}</div>
-                        <FontAwesomeIcon
-                          className="h-4 w-4 text-red-600 hover:cursor-pointer"
-                          onClick={() =>
-                            deleteComment(
-                              inquiry.itemId,
-                              inquiry.boardId,
-                              c.commentId,
-                            )
-                          }
-                          icon={faCircleXmark}
-                        />
+                        {isEdit ? (
+                          <div className="flex w-full flex-col gap-2">
+                            <textarea
+                              name={`edit_${c.commentId}`}
+                              id={`edit_${c.commentId}`}
+                              value={editText}
+                              onChange={(e) => setEditText(e.target.value)}
+                              cols={60}
+                              rows={5}
+                              className="border border-gray-800 px-2 py-2"
+                            />
+                            <div className="flex gap-2 self-end">
+                              <button
+                                className="w-24 self-end rounded bg-red-300"
+                                onClick={() => setIsEdit(false)}
+                              >
+                                취소하기
+                              </button>
+                              <button
+                                className="w-24 self-end rounded bg-blue-300"
+                                onClick={() =>
+                                  editComment(
+                                    inquiry.itemId,
+                                    inquiry.boardId,
+                                    c.commentId,
+                                  )
+                                }
+                              >
+                                수정하기
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex w-full">
+                            <div className="grow">{c.comment}</div>
+                            <FontAwesomeIcon
+                              icon={faPenToSquare}
+                              className="h-4 w-4 self-center pr-1 text-green-500 hover:cursor-pointer"
+                              onClick={() => {
+                                setEditText(c.comment);
+                                setIsEdit(true);
+                              }}
+                            />
+                            <FontAwesomeIcon
+                              className="h-4 w-4 self-center text-red-600 hover:cursor-pointer"
+                              onClick={() =>
+                                deleteComment(
+                                  inquiry.itemId,
+                                  inquiry.boardId,
+                                  c.commentId,
+                                )
+                              }
+                              icon={faCircleXmark}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="col-start-2 col-end-6 flex flex-col gap-2">
+                  <div className="col-start-2 col-end-6 flex flex-col gap-2 py-2">
                     <textarea
                       name={`answer_area_${index}`}
                       value={commentsText[index]}
