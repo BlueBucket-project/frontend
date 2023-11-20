@@ -100,7 +100,7 @@ export default function ItemDetail() {
     if (focusedImg > 0) {
       setFocusedImg(focusedImg - 1);
     } else {
-      setFocusedImg(imgdata.length);
+      setFocusedImg(imgdata.length - 1);
     }
   };
 
@@ -116,6 +116,11 @@ export default function ItemDetail() {
               <div>
                 <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
                   <div className="relative flex h-full w-full justify-between">
+                    {imgdata && imgdata.length > 0 ? (
+                      <img src={imgdata[focusedImg].uploadImgUrl} />
+                    ) : (
+                      "이미지가 없습니다."
+                    )}
                     <button
                       className="absolute left-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
                       onClick={beforeImg}
