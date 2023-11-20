@@ -36,6 +36,7 @@ function Header() {
 
   const onClickLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   const renderLinks = (): ReactElement => {
