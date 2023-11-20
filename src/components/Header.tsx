@@ -41,7 +41,7 @@ function Header() {
       </div>
       {user !== 0 ? (
         <div className="flex h-full w-40 items-center justify-between">
-          <Link to="/mypage">마이페이지</Link>
+          <Link to="/mypage/history">마이페이지</Link>
           <Link to="/cart">장바구니</Link>
         </div>
       ) : (
