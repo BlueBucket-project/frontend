@@ -8,6 +8,17 @@ interface ProductListResponse {
   items: Product[];
   nowPageNumber: number;
 }
+
+interface PurchaseHistory {
+  orderDate: string;
+  orderitemId: number;
+  itemPrice: number;
+  itemAmount: number;
+  itemBuyer: number;
+  itemSeller: number;
+  itemId: number;
+  item: Product;
+}
 interface Product {
   itemId: number;
   itemName: string;
