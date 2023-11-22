@@ -46,7 +46,7 @@ export default function ProductEditor({
       })
       .then((_) => {
         alert("등록되었습니다.");
-        navigate("/product");
+        navigate("/admin/product");
       });
   };
 
@@ -63,7 +63,7 @@ export default function ProductEditor({
       })
       .then((_) => {
         alert("수정되었습니다.");
-        navigate("/product");
+        navigate("/admin/product");
       });
   };
 

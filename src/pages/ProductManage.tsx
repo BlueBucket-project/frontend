@@ -5,44 +5,52 @@ import { useAppSelector } from "../app/hooks.ts";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import Popup from "reactjs-popup";
+import PageButtons from "../components/PageButtons.tsx";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
 export default function ProductManage(): ReactElement {
   const navigate = useNavigate();
-  const [response, setResponse] = useState<ProductListResponse>();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [totalPage, setTotalPage] = useState<number>(0);
   const [queryProductStatus, setQueryProductStatus] =
     useState<ProductStatus>("SELL");
   const [deleteTargetId, setDeleteTargetId] = useState<number>(-1);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user);
 
-  const searchItems = () => {
-    let api = "/items/search";
+  const refreshProducts = () => {
+    let api = `/items/search?page=${page}`;
     if (queryProductStatus.length > 0) {
-      api += `?itemSellStatus=${queryProductStatus}`;
+      api += `itemSellStatus=${queryProductStatus}`;
     }
     instance
       .get(api)
       .then((res) => {
-        setResponse(res.data);
+        const response: ProductListResponse = res.data;
+        setTotalPage(response.totalPage);
+        setPage(response.nowPageNumber);
+        setProducts(response.items);
+        console.log(response);
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 400) {
-          setResponse(undefined);
+          setProducts([]);
           alert(error.response.data);
         }
       });
   };
 
   useEffect(() => {
-    searchItems();
-  }, [queryProductStatus]);
+    refreshProducts();
+  }, [page, queryProductStatus]);
 
   const deleteItem = () => {
     instanceH(user.accessToken)
-      .delete(`/items/${deleteTargetId}`)
+      .delete(`/admins/items/${deleteTargetId}`)
       .then((res) => {
+        refreshProducts();
         console.log(res);
       });
   };
@@ -70,7 +78,7 @@ export default function ProductManage(): ReactElement {
           <div className="col-span-1">등록일</div>
           <div className="col-span-1"></div>
         </div>
-        {response?.items.map((product, i) => (
+        {products.map((product, i) => (
           <div
             key={`product_${i}`}
             className="grid max-w-5xl grid-cols-8 items-center justify-items-center gap-3 border-b py-4 pl-10"
@@ -121,7 +129,17 @@ export default function ProductManage(): ReactElement {
             </div>
           </div>
         ))}
+        <div className="flex h-12 justify-end pr-6 pt-4">
+          <button
+            className="w-24 rounded bg-blue-200"
+            onClick={() => navigate(`/admin/product/create`)}
+          >
+            상품 추가
+          </button>
+        </div>
+        <PageButtons page={page} totalPage={totalPage} onClickPage={setPage} />
       </div>
+
       <Popup
         open={isModalOpened}
         onClose={() => setIsModalOpened(false)}
@@ -144,7 +162,7 @@ export default function ProductManage(): ReactElement {
               onClick={() => {
                 deleteItem();
                 setIsModalOpened(false);
-                searchItems();
+                refreshProducts();
               }}
             >
               삭제
