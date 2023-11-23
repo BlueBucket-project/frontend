@@ -29,7 +29,7 @@ export default function Register(): ReactElement {
       },
       memberName: name,
       memberPw: password,
-      memberRole: "ADMIN",
+      memberRole: "USER",
       nickName: nickName,
     };
     instance.post("/users/", body).then((res) => {
