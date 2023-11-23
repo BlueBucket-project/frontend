@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { ICartItem } from "../responseTypes";
 import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
+import { CartItem } from "../components/CartItem";
 
 interface ICartItems extends Array<ICartItem> {}
 
@@ -44,18 +45,6 @@ export default function Cart() {
           cartId: item.cart.cartId,
           count: item.count,
           itemId: item.item.itemId,
-        },
-      ])
-      .then(() => {
-        callListData();
-      });
-  };
-
-  const cartItemReserve = (id: number) => {
-    instanceH(accessToken)
-      .post("/cart/orderItems", [
-        {
-          cartItemId: id,
         },
       ])
       .then(() => {
@@ -118,42 +107,11 @@ export default function Cart() {
             <div className="">
               {waitlist.map((item) => {
                 return (
-                  <div className="flex h-40 w-full items-center justify-between border-b py-8">
-                    <div className="h-28 w-28 rounded-lg bg-blue-100 ">
-                      이미지
-                    </div>
-                    <div className="flex-col justify-between ">
-                      <div className="mb-4 w-96">{item.item.itemName}</div>
-                      <div>
-                        {item.item.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      </div>
-                    </div>
-                    <div>
-                      <div>{item.count}</div>
-                      <div>수정하기</div>
-                    </div>
-                    <div>
-                      {(item.count * item.item.price)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <button
-                        onClick={() => cartItemDelete(item)}
-                        className="mb-4 h-12 w-32 rounded-xl bg-red-100"
-                      >
-                        X
-                      </button>
-                      <button
-                        className="h-12 w-32 rounded-xl bg-blue-100"
-                        onClick={() => cartItemReserve(item.cartItemId)}
-                      >
-                        선택구매예약
-                      </button>
-                    </div>
-                  </div>
+                  <CartItem
+                    item={item}
+                    callListData={callListData}
+                    key={item.cartItemId}
+                  />
                 );
               })}
             </div>
@@ -171,36 +129,40 @@ export default function Cart() {
             <div className="">
               {reservedList.map((item) => {
                 return (
-                  <div className="flex h-40 w-full items-center justify-between border-b py-8">
+                  <div
+                    key={item.cartItemId}
+                    className="grid h-40 w-full grid-cols-8 items-center justify-between gap-4 border-b py-8"
+                  >
                     <div className="h-28 w-28 rounded-lg bg-blue-100 ">
                       이미지
                     </div>
-                    <div className="flex-col justify-between ">
+                    <div className="col-span-4 col-start-2 flex-col justify-between ">
                       <div className="mb-4 w-96">{item.item.itemName}</div>
                       <div>
                         {item.item.price
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        원
                       </div>
                     </div>
                     <div>
-                      <div>{item.count}</div>
-                      <div>수정하기</div>
+                      <div>{item.count}개</div>
                     </div>
                     <div>
                       {(item.count * item.item.price)
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      원
                     </div>
                     <div className="flex flex-col items-center">
                       <button
                         onClick={() => cartItemDelete(item)}
-                        className="mb-4 h-12 w-32 rounded-xl bg-red-100"
+                        className="mb-4 h-10 w-28 rounded-xl bg-red-100"
                       >
                         X
                       </button>
                       <button
-                        className="h-12 w-32 rounded-xl bg-blue-100"
+                        className="h-10 w-28 rounded-xl bg-blue-100"
                         onClick={() => reserveItemCart(item.cartItemId)}
                       >
                         장바구니로
