@@ -31,7 +31,6 @@ export default function InquiryList(): ReactElement {
         setCommentsText(
           Array.from({ length: inquiriesResponse.items.length }, () => ""),
         );
-        console.log(inquiriesResponse);
       });
   };
 
