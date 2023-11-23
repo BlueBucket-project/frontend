@@ -23,7 +23,7 @@ export default function ProductManage(): ReactElement {
   const refreshProducts = () => {
     let api = `/items/search?page=${page}`;
     if (queryProductStatus.length > 0) {
-      api += `itemSellStatus=${queryProductStatus}`;
+      api += `&itemSellStatus=${queryProductStatus}`;
     }
     instance
       .get(api)
@@ -32,7 +32,6 @@ export default function ProductManage(): ReactElement {
         setTotalPage(response.totalPage);
         setPage(response.nowPageNumber);
         setProducts(response.items);
-        console.log(response);
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 400) {
@@ -49,9 +48,8 @@ export default function ProductManage(): ReactElement {
   const deleteItem = () => {
     instanceH(user.accessToken)
       .delete(`/admins/items/${deleteTargetId}`)
-      .then((res) => {
+      .then(() => {
         refreshProducts();
-        console.log(res);
       });
   };
   return (
