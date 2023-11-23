@@ -12,7 +12,8 @@ interface ProductDto {
   price: number;
   stockNumber: number;
   sellPlace: string;
-  delImgId?: number[];
+  itemSeller?: number;
+  remainImgId?: number[];
 }
 
 interface Img {
@@ -70,10 +71,10 @@ export default function ProductEditor({
   const deleteImg = (index: number) => {
     if (images[index].imgId !== undefined) {
       const nextDelImgId =
-        product.delImgId?.filter((id) => id !== images[index].imgId) || [];
-      setProduct({ ...product, delImgId: nextDelImgId });
+        product.remainImgId?.filter((id) => id !== images[index].imgId) || [];
+      setProduct({ ...product, remainImgId: nextDelImgId });
     } else {
-      const filesIndex = index - (product.delImgId?.length || 0);
+      const filesIndex = index - (product.remainImgId?.length || 0);
       setFiles(files.filter((_, i) => i !== filesIndex));
     }
     const nextImages = images.filter((_, i) => i !== index);
@@ -89,17 +90,20 @@ export default function ProductEditor({
       stockNumber: initialProduct.stockNumber,
       sellPlace: initialProduct.sellPlace,
     };
-    if (!isCreate && initialProduct.itemImgList.length > 0) {
-      parsedProduct.delImgId = initialProduct.itemImgList.map(
-        (img) => img.itemImgId,
-      );
-      const parsedImages = initialProduct.itemImgList.map((img) => {
-        return {
-          imgId: img.itemImgId,
-          imgPath: img.uploadImgUrl,
-        };
-      });
-      setImages(parsedImages);
+    if (!isCreate) {
+      parsedProduct.itemSeller = initialProduct.itemSeller;
+      if (initialProduct.itemImgList.length > 0) {
+        parsedProduct.remainImgId = initialProduct.itemImgList.map(
+          (img) => img.itemImgId,
+        );
+        const parsedImages = initialProduct.itemImgList.map((img) => {
+          return {
+            imgId: img.itemImgId,
+            imgPath: img.uploadImgUrl,
+          };
+        });
+        setImages(parsedImages);
+      }
     }
     setProduct(parsedProduct);
   }, [initialProduct]);

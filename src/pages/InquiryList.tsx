@@ -9,24 +9,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { instanceH } from "../api";
 import PageButtons from "../components/PageButtons.tsx";
 import { useAppSelector } from "../app/hooks.ts";
+import Popup from "reactjs-popup";
 
 export default function InquiryList(): ReactElement {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [selectedInquiryIndex, setSelectedInquiryIndex] = useState<number>(-1);
   const [commentsText, setCommentsText] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>("");
+  const [clickedNickname, setClickedNickname] = useState<string>("");
   const accessToken = useAppSelector((state) => state.user.accessToken);
 
-  const refreshInquiries = () => {
+  const refreshInquiries = (nextPage: number = 1, nickname: string = "") => {
+    var api = "/admins/boards";
+    if (nickname.length > 0) {
+      api += `/${nickname}`;
+    }
     instanceH(accessToken)
-      .get(`/admins/boards?page=${page}`)
+      .get(`${api}?page=${nextPage}`)
       .then((res) => {
+        console.log(res);
         const inquiriesResponse: InquiriesResponse = res.data;
         setTotalPage(inquiriesResponse.totalPage);
-        setPage(inquiriesResponse.nowPageNumber);
         setInquiries(inquiriesResponse.items);
         setCommentsText(
           Array.from({ length: inquiriesResponse.items.length }, () => ""),
@@ -35,15 +41,22 @@ export default function InquiryList(): ReactElement {
   };
 
   useEffect(() => {
-    refreshInquiries();
-  }, [page]);
+    refreshInquiries(page, clickedNickname);
+  }, [page, clickedNickname]);
 
   const postComment = (itemId: number, boardId: number) => {
     instanceH(accessToken)
       .post(`/${itemId}/boards/${boardId}/comments`, {
         comment: commentsText[selectedInquiryIndex],
       })
-      .then(() => refreshInquiries());
+      .then(() => {
+        setClickedNickname("");
+        if (page !== 1) {
+          setPage(1);
+          return;
+        }
+        refreshInquiries();
+      });
   };
 
   const editComment = (itemId: number, boardId: number, commentId: number) => {
@@ -52,7 +65,12 @@ export default function InquiryList(): ReactElement {
         comment: editText,
       })
       .then(() => {
+        setClickedNickname("");
         setIsEdit(false);
+        if (page !== 1) {
+          setPage(1);
+          return;
+        }
         refreshInquiries();
       });
   };
@@ -64,7 +82,14 @@ export default function InquiryList(): ReactElement {
   ) => {
     instanceH(accessToken)
       .delete(`/${itemId}/boards/${boardId}/comments/${commentId}`)
-      .then(() => refreshInquiries());
+      .then(() => {
+        setClickedNickname("");
+        if (page !== 1) {
+          setPage(1);
+          return;
+        }
+        refreshInquiries();
+      });
   };
 
   return (
@@ -103,12 +128,30 @@ export default function InquiryList(): ReactElement {
                   {getTitle(inquiry.content, index === selectedInquiryIndex)}
                 </div>
               </div>
-              <div
-                className="col-span-1 text-center"
-                onClick={() => console.log("nickname clicked")}
+
+              <Popup
+                trigger={
+                  <div className="relative col-span-1 flex text-center">
+                    <div>{inquiry.nickName}</div>
+                  </div>
+                }
+                position="right center"
+                on={["hover", "focus"]}
+                arrow={true}
               >
-                {inquiry.nickName}
-              </div>
+                <div className="flex w-24 flex-col items-center border border-black bg-white">
+                  <div
+                    onClick={() => {
+                      setPage(1);
+                      setClickedNickname(inquiry.nickName);
+                    }}
+                    className="hover:cursor-pointer"
+                  >
+                    문의 검색
+                  </div>
+                </div>
+              </Popup>
+
               <div className="col-span-1 text-center">
                 {inquiry.regTime.split("T")[0]}
               </div>
