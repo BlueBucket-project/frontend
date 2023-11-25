@@ -118,24 +118,28 @@ export default function ItemDetail() {
             <div className="flex justify-start">
               <div>
                 <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
-                  <div className="relative flex h-full w-full justify-between">
+                  <div className="group relative flex h-full w-full justify-between">
                     {imgdata && imgdata.length > 0 ? (
                       <img src={imgdata[focusedImg].uploadImgUrl} />
                     ) : (
                       "이미지가 없습니다."
                     )}
-                    <button
-                      className="absolute left-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
-                      onClick={beforeImg}
-                    >
-                      &lt;
-                    </button>
-                    <button
-                      className="absolute right-0 top-2/4 my-auto h-12 w-12 rounded-full bg-blue-50 text-2xl"
-                      onClick={nextImg}
-                    >
-                      &gt;
-                    </button>
+                    {imgdata.length > 1 && (
+                      <div className="flex opacity-0 group-hover:opacity-100">
+                        <button
+                          className="absolute left-2 my-auto h-12 w-12 self-center rounded-full bg-blue-50 text-2xl"
+                          onClick={beforeImg}
+                        >
+                          &lt;
+                        </button>
+                        <button
+                          className="absolute right-2 my-auto h-12 w-12 self-center rounded-full bg-blue-50 text-2xl"
+                          onClick={nextImg}
+                        >
+                          &gt;
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="my-4 flex">
@@ -228,40 +232,38 @@ export default function ItemDetail() {
                   문의하기
                 </button>
               ) : (
-                <div>
-                  <div>
-                    <form className="flex flex-col">
-                      <input
-                        className="mt-4 outline outline-1  outline-offset-2"
-                        placeholder="문의 제목"
-                        type="text"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                      />
-                      <input
-                        className="mt-4 outline outline-1 outline-offset-2"
-                        placeholder="문의 내용"
-                        type="text"
-                        id="content"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                      />
-                    </form>
-                    <div className="mt-4">
-                      <button
-                        className="rounded-4 mr-4 bg-blue-100 p-4"
-                        onClick={postqna}
-                      >
-                        등록하기
-                      </button>
-                      <button
-                        className="rounded-4 bg-red-100 p-4"
-                        onClick={() => setIsfold(!isfold)}
-                      >
-                        취소하기
-                      </button>
-                    </div>
+                <div className="ml-28">
+                  <form className="flex flex-col">
+                    <input
+                      className="mt-4 w-48 outline  outline-1 outline-offset-2"
+                      placeholder="문의 제목"
+                      type="text"
+                      id="title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <textarea
+                      className="mt-4 w-3/4 outline outline-1 outline-offset-2"
+                      placeholder="문의 내용"
+                      rows={4}
+                      id="content"
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                    />
+                  </form>
+                  <div className="mt-4">
+                    <button
+                      className="rounded-4 mr-4 rounded-lg bg-blue-100 p-2"
+                      onClick={postqna}
+                    >
+                      등록하기
+                    </button>
+                    <button
+                      className="rounded-4 rounded-lg bg-red-100 p-2"
+                      onClick={() => setIsfold(!isfold)}
+                    >
+                      취소하기
+                    </button>
                   </div>
                 </div>
               )}

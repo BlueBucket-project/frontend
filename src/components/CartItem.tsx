@@ -114,7 +114,7 @@ export function CartItem({ item, callListData }: ItemProp) {
           onClick={() => cartItemDelete(item)}
           className="mb-4 h-10 w-28 rounded-xl bg-red-100"
         >
-          X
+          취소
         </button>
         <button
           className="h-10 w-28 rounded-xl bg-blue-100"

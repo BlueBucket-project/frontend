@@ -52,13 +52,13 @@ export default function Register(): ReactElement {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="mb-5 h-20 w-20">
+      <div className="mb-5 h-32 w-48">
         <Logo />
       </div>
       <div className="w-2/5 border p-10 text-center text-xl">
         <div className="m-auto flex w-full flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">이메일</div>
+            <div className="w-28 text-left">이메일</div>
             <input
               type="text"
               id="id"
@@ -69,7 +69,7 @@ export default function Register(): ReactElement {
             />
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">비밀번호</div>
+            <div className="w-28 text-left">비밀번호</div>
             <input
               type="password"
               id="password"
@@ -80,7 +80,7 @@ export default function Register(): ReactElement {
             />
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">이름</div>
+            <div className="w-28 text-left">이름</div>
             <input
               type="name"
               id="name"
@@ -91,7 +91,7 @@ export default function Register(): ReactElement {
             />
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">닉네임</div>
+            <div className="w-28 text-left">닉네임</div>
             <input
               type="nickName"
               id="nickName"
@@ -102,7 +102,7 @@ export default function Register(): ReactElement {
             />
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">우편번호</div>
+            <div className="w-28 text-left">우편번호</div>
             <input
               type="zipCode"
               id="zipCode"
@@ -130,7 +130,7 @@ export default function Register(): ReactElement {
             </Popup>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">주소</div>
+            <div className="w-28 text-left">주소</div>
             <input
               type="addr"
               id="addr"
@@ -141,7 +141,7 @@ export default function Register(): ReactElement {
             />
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-20 text-left">상세 주소</div>
+            <div className="w-28 text-left">상세 주소</div>
             <input
               type="addrDetail"
               id="addrDetail"

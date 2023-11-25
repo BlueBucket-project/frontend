@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import { instance } from "../api";
 import { useEffect, useState } from "react";
 import { Item } from "../responseTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 interface Items extends Array<Item> {}
 
@@ -90,7 +92,9 @@ export default function Search() {
             />
           </div>
           <div>
-            <button onSubmit={onSubmit}>돋보기</button>
+            <button onSubmit={onSubmit}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
           </div>
         </form>
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 text-4xl font-bold">

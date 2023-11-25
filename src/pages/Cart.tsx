@@ -159,13 +159,13 @@ export default function Cart() {
                         onClick={() => cartItemDelete(item)}
                         className="mb-4 h-10 w-28 rounded-xl bg-red-100"
                       >
-                        X
+                        취소
                       </button>
                       <button
                         className="h-10 w-28 rounded-xl bg-blue-100"
                         onClick={() => reserveItemCart(item.cartItemId)}
                       >
-                        장바구니로
+                        장바구니
                       </button>
                     </div>
                   </div>
