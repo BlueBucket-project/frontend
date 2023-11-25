@@ -39,12 +39,12 @@ function Login(): ReactElement {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="mb-5 h-20 w-20">
+      <div className="mb-5 h-40 w-40">
         <Link to={"/"}>
           <Logo />
         </Link>
       </div>
-      <div className="w-1/3 border p-10 text-center text-xl">
+      <div className="w-1/4 border border-blue-200 p-10 text-center text-xl">
         <div className="m-auto flex flex-col gap-5">
           <input
             type="text"

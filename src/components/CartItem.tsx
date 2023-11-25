@@ -36,8 +36,7 @@ export function CartItem({ item, callListData }: ItemProp) {
         count: selectCount,
         itemId: item.item.itemId,
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setIsEditing(false);
         callListData();
       });
@@ -71,11 +70,11 @@ export function CartItem({ item, callListData }: ItemProp) {
 
   return (
     <div className="grid h-40 w-full grid-cols-7 items-center justify-between gap-4 border-b py-8">
-      <div className="h-28 w-28 rounded-lg bg-blue-100 ">이미지</div>
+      <div className="h-28 w-28 rounded-lg bg-blue-100">이미지</div>
       <div className="col-span-3 col-start-2 flex-col justify-between ">
-        <div className="mb-4 w-96">{item.item.itemName}</div>
+        {/* <div className="mb-4 w-96">{item.item.itemName}</div> */}
         <div>
-          {item.item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
+          {/* {item.item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 */}
         </div>
       </div>
       <div>
@@ -93,7 +92,7 @@ export function CartItem({ item, callListData }: ItemProp) {
           </div>
         ) : (
           <div>
-            <div className="inline">{item.count}개</div>
+            {/* <div className="inline">{item.count}개</div> */}
             <button
               onClick={() => setIsEditing(true)}
               className="ml-4 rounded-xl bg-yellow-100 p-2"
@@ -104,10 +103,10 @@ export function CartItem({ item, callListData }: ItemProp) {
         )}
       </div>
       <div>
-        {(item.count * item.item.price)
+        {/* {(item.count * item.item.price)
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        원
+        원 */}
       </div>
       <div className="flex flex-col items-end">
         <button
