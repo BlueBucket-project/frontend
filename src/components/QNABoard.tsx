@@ -71,12 +71,15 @@ export function QNABoard({ item, rerender }: BoardProps) {
                       setContent(item.content);
                       setIsEditing(true);
                     }}
-                    className="mr-4 bg-yellow-100 p-2"
+                    className="mr-4 border bg-yellow-100 px-2 py-1 text-sm"
                   >
                     수정
                   </button>
                 )}
-                <button className="bg-red-100 p-2" onClick={boardDelete}>
+                <button
+                  className="border bg-red-100 px-2 py-1 text-sm"
+                  onClick={boardDelete}
+                >
                   삭제
                 </button>
               </div>

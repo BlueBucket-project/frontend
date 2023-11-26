@@ -139,21 +139,28 @@ export default function Cart() {
                       className="grid h-40 w-full grid-cols-8 items-center justify-between gap-4 border-b py-8"
                     >
                       <div className="h-28 w-28 rounded-lg bg-blue-100 ">
-                        이미지
+                        {item.item.itemImgList &&
+                        item.item.itemImgList?.length > 0 ? (
+                          <img src={item.item.itemImgList[0].uploadImgUrl} />
+                        ) : (
+                          "이미지가 없습니다."
+                        )}
                       </div>
                       <div className="col-span-4 col-start-2 flex-col justify-between ">
-                        <div className="mb-4 w-96">{item.item.itemName}</div>
-                        <div>
+                        <div className="mb-4 w-96 text-xl">
+                          {item.item.itemName}
+                        </div>
+                        <div className="text-xl">
                           {item.item.price
                             .toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           원
                         </div>
                       </div>
-                      <div>
+                      <div className="text-xl">
                         <div>{item.count}개</div>
                       </div>
-                      <div>
+                      <div className="text-xl">
                         {(item.count * item.item.price)
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}

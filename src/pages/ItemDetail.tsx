@@ -202,7 +202,7 @@ export default function ItemDetail() {
             <div className="my-4" id="QA">
               <div className="my-4 text-lg font-bold">Q&A</div>
               <div className="border-y border-t-2 border-t-black">
-                <div className="grid grid-cols-10 border-b border-b-gray-400 py-4 text-center">
+                <div className="grid grid-cols-10 border-b-2 border-b-gray-600 py-4 text-center text-lg font-bold">
                   <div>답변상태</div>
                   <div className="col-span-7 col-start-2">문의 내용</div>
                   <div>작성자</div>
