@@ -35,9 +35,6 @@ export default function PageButtons({
 }
 
 const getPageList = (now: number, total: number): string[] => {
-  if (total === 1) {
-    return ["1"];
-  }
   const ret: string[] = [];
   if (now <= 4) {
     ret.push(...Array.from({ length: now }, (_, i) => (i + 1).toString()));
@@ -48,7 +45,7 @@ const getPageList = (now: number, total: number): string[] => {
 
   if (now >= total - 3) {
     ret.push(
-      ...Array.from({ length: total - now + 1 }, (_, i) =>
+      ...Array.from({ length: total - now }, (_, i) =>
         (i + now + 1).toString(),
       ),
     );
