@@ -260,7 +260,7 @@ export default function InquiryList(): ReactElement {
             </div>
           </div>
         ))}
-        <PageButtons page={page} totalPage={totalPage} onClickPage={setPage} />
+        <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
       </div>
     </>
   );
