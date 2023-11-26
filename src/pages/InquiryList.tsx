@@ -96,7 +96,23 @@ export default function InquiryList(): ReactElement {
     <>
       <Header />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
-        <div className="border-b-2 border-black pb-2 text-3xl">상품 문의</div>
+        <div className="flex items-end border-b-2 border-black pb-2 text-3xl">
+          <div>상품 문의</div>
+          <div
+            className={`ml-5 text-lg text-gray-400 ${
+              clickedNickname.length <= 0 ? "hidden" : ""
+            }`}
+          >
+            "{clickedNickname}"님이 작성한 글입니다.
+          </div>
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            className={`mt-2 h-3 w-3 self-start text-red-600 hover:cursor-pointer ${
+              clickedNickname.length <= 0 ? "hidden" : ""
+            }`}
+            onClick={() => setClickedNickname("")}
+          />
+        </div>
         <div className="grid h-10 grid-cols-7 border-b border-black text-center leading-10">
           <div className="col-span-1">답변상태</div>
           <div className="col-span-4">제목</div>
