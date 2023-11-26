@@ -40,7 +40,9 @@ export default function ProductEditor({
       "key",
       new Blob([JSON.stringify(product)], { type: "application/json" }),
     );
-    form.append("files", new Blob(files));
+    files.forEach((f) => {
+      form.append("files", new Blob([f]));
+    });
     instanceH(accessToken)
       .post("/items", form, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -57,7 +59,9 @@ export default function ProductEditor({
       "key",
       new Blob([JSON.stringify(product)], { type: "application/json" }),
     );
-    form.append("files", new Blob(files));
+    files.forEach((f) => {
+      form.append("files", new Blob([f]));
+    });
     instanceH(accessToken)
       .put(`/items/${product.itemId}`, form, {
         headers: { "Content-Type": "multipart/form-data" },
