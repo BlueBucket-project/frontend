@@ -14,6 +14,7 @@ import EditProfile from "./components/EditProfile.tsx";
 import MyInquiries from "./components/MyInquiries.tsx";
 import Withdrawal from "./components/Withdrawal.tsx";
 import ProductCreate from "./pages/ProductCreate.tsx";
+import ProductPurchase from "./pages/ProductPurchase.tsx";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: "admin/inquiries",
     element: <InquiryList />,
+  },
+  {
+    path: "admin/purchase",
+    element: <ProductPurchase />,
   },
   {
     path: "/admin/product",

@@ -76,7 +76,7 @@ export default function ProductManage(): ReactElement {
           <div className="col-span-1">등록일</div>
           <div className="col-span-1"></div>
         </div>
-        {products.map((product, i) => (
+        {products.map((product: Product, i: number) => (
           <div
             key={`product_${i}`}
             className="grid max-w-5xl grid-cols-8 items-center justify-items-center gap-3 border-b py-4 pl-10"

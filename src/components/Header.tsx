@@ -6,6 +6,7 @@ import {
   faCartShopping,
   faClipboardQuestion,
   faGift,
+  faMoneyCheckDollar,
   faRightFromBracket,
   faRightToBracket,
   faUser,
@@ -56,6 +57,12 @@ function Header() {
     if (user.role === "ROLE_ADMIN") {
       return (
         <div className="flex h-full items-center justify-end gap-2">
+          <Link to="/admin/purchase">
+            <div className="flex w-14 flex-col items-center gap-1 text-xs">
+              <FontAwesomeIcon icon={faMoneyCheckDollar} className="h-8 w-8" />
+              <div>상품주문</div>
+            </div>
+          </Link>
           <Link to="/admin/product">
             <div className="flex w-14 flex-col items-center gap-1 text-xs">
               <FontAwesomeIcon icon={faGift} className="h-8 w-8" />
