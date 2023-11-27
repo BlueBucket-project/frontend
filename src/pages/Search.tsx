@@ -23,9 +23,7 @@ export default function Search() {
   const { itemName, startPrice, endPrice, itemPlace } = searchValue;
 
   useEffect(() => {
-    instance
-      .get(`/items/search`, { params: { itemName } })
-      .then((res) => setSearchResult(res.data.items));
+    getSearchData();
   }, []);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,18 +34,21 @@ export default function Search() {
     });
   };
 
-  const onSubmit = () => {
+  function getSearchData() {
     instance
       .get(`/items/search`, {
         params: { itemName, startPrice, endPrice, itemPlace },
       })
       .then((res) => {
-        console.log(res);
         setSearchResult(res.data.items);
       })
       .catch(() => {
         setSearchResult([]);
       });
+  }
+
+  const onSubmit = () => {
+    getSearchData();
   };
 
   return (
