@@ -1,23 +1,34 @@
 import Header from "../components/Header.tsx";
 import Card from "../components/Card.tsx";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useRef, useEffect, useState } from "react";
 import { instance } from "../api/index.ts";
 import { Item } from "../responseTypes.ts";
+import useInfiniteScroll from "../components/useInfinitescroll.ts";
 
 interface Items extends Array<Item> {}
 
 function Home(): ReactElement {
+  const target = useRef<HTMLDivElement>(null);
   const [items, setItems] = useState<Items>([]);
+
+  const { page } = useInfiniteScroll({
+    target: target,
+    targetArray: items,
+    threshold: 0.2,
+    endPoint: 4,
+  });
+
   useEffect(() => {
     instance
-      .get("/items")
+      .get("/items", { params: { page } })
       .then((res) => {
-        setItems(res.data.items);
+        setItems((prev) => [...new Set([...prev, ...res.data.items])]);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [page]);
+
   return (
     <>
       <Header />
@@ -25,7 +36,10 @@ function Home(): ReactElement {
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 font-sans text-4xl font-bold">
           <span>방금 올라온 물건들</span>
         </div>
-        <div className="mx-auto my-8 grid max-w-4xl grid-cols-3 gap-8">
+        <div
+          ref={target}
+          className="mx-auto my-8 grid max-w-4xl grid-cols-3 gap-8"
+        >
           {items && items.length > 0 ? (
             items.map((item) => {
               return <Card item={item} key={item.itemId} />;
