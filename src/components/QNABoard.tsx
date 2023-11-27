@@ -1,7 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
 import { IBoardItem } from "../responseTypes";
 import { useState } from "react";
+import { faArrowRight, faLock } from "@fortawesome/free-solid-svg-icons";
 
 type BoardProps = {
   item: IBoardItem;
@@ -33,16 +35,19 @@ export function QNABoard({ item, rerender }: BoardProps) {
   };
 
   return (
-    <div>
+    <div className="max-w-5xl">
       <div
         key={item.boardId}
         onClick={() => setSeeReply(!seeReply)}
-        className="block grid  grid-cols-10 border-b border-b-gray-400 py-4 text-center hover:cursor-pointer"
+        className="block grid  grid-cols-10 items-center border-b border-b-gray-400 py-4 text-center hover:cursor-pointer"
       >
         <div>{item.replyStatus === "REPLY_O" ? "답변완료" : "미답변"}</div>
-        <div className="col-span-7 col-start-2 flex text-left">
+        <div className="col-span-7 col-start-2 flex items-center text-ellipsis text-left">
           {item.boardSecret === "LOCK" ? (
-            "잠긴 문의글입니다."
+            <>
+              <FontAwesomeIcon icon={faLock} className="h-6 w-6" />
+              잠긴 문의글입니다.
+            </>
           ) : isEditing ? (
             <div className="w-full">
               <input
@@ -58,21 +63,26 @@ export function QNABoard({ item, rerender }: BoardProps) {
             item.content
           )}
           {item.boardSecret === "LOCK" || isEditing ? null : (
-            <div className="ml-4">
-              {item.replyStatus === "REPLY_O" ? null : (
+            <div className="ml-4 w-48">
+              <div>
+                {item.replyStatus === "REPLY_O" ? null : (
+                  <button
+                    onClick={() => {
+                      setContent(item.content);
+                      setIsEditing(true);
+                    }}
+                    className="mr-4 border bg-yellow-100 px-2 py-1 text-sm"
+                  >
+                    수정
+                  </button>
+                )}
                 <button
-                  onClick={() => {
-                    setContent(item.content);
-                    setIsEditing(true);
-                  }}
-                  className="bg-yellow-100 p-2"
+                  className="border bg-red-100 px-2 py-1 text-sm"
+                  onClick={boardDelete}
                 >
-                  수정하기
+                  삭제
                 </button>
-              )}
-              <button className="bg-red-100 p-2" onClick={boardDelete}>
-                삭제하기
-              </button>
+              </div>
             </div>
           )}
         </div>
@@ -84,11 +94,14 @@ export function QNABoard({ item, rerender }: BoardProps) {
           onClick={() => setSeeReply(!seeReply)}
           className="block grid  grid-cols-10 border-b border-b-gray-400 bg-blue-50 py-4 text-center hover:cursor-pointer"
         >
-          <div>답변</div>
+          <div>
+            <FontAwesomeIcon icon={faArrowRight} />
+            답변
+          </div>
           <div className="col-span-7 col-start-2 text-left">
             {item.commentDTOList[0].comment}
           </div>
-          <div>관리자id?</div>
+          <div></div>
           <div>{item.commentDTOList[0].writeTime.slice(0, 10)}</div>
         </div>
       ) : null}

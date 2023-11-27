@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import { instance } from "../api";
 import { useEffect, useState } from "react";
 import { Item } from "../responseTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 interface Items extends Array<Item> {}
 
@@ -21,9 +23,7 @@ export default function Search() {
   const { itemName, startPrice, endPrice, itemPlace } = searchValue;
 
   useEffect(() => {
-    instance
-      .get(`/items/search`, { params: { itemName } })
-      .then((res) => setSearchResult(res.data.items));
+    getSearchData();
   }, []);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,18 +34,21 @@ export default function Search() {
     });
   };
 
-  const onSubmit = () => {
+  function getSearchData() {
     instance
       .get(`/items/search`, {
         params: { itemName, startPrice, endPrice, itemPlace },
       })
       .then((res) => {
-        console.log(res);
         setSearchResult(res.data.items);
       })
       .catch(() => {
         setSearchResult([]);
       });
+  }
+
+  const onSubmit = () => {
+    getSearchData();
   };
 
   return (
@@ -90,7 +93,9 @@ export default function Search() {
             />
           </div>
           <div>
-            <button onSubmit={onSubmit}>돋보기</button>
+            <button onSubmit={onSubmit}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
           </div>
         </form>
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 text-4xl font-bold">

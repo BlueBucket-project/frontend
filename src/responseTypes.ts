@@ -3,14 +3,16 @@ export interface Item {
   itemName: string;
   price: number;
   itemDetail: string;
-  itemSellStatus: number;
+  itemSellStatus: string;
   regTime: string;
   memberNickName: string;
   stockNumber: number;
   sellPlace: string;
-  itemReserver: boolean;
+  itemReserver: null;
+  itemSeller: number;
   itemRamount: number;
   itemImgList?: ItemImg[];
+  boardDTOList: IBoardList[];
 }
 export interface ItemImg {
   itemImgId: number;
@@ -42,8 +44,8 @@ export interface Address {
 export interface ICartItem {
   cart: {
     cartId: number;
-    member: null;
-    cartItems: null;
+    member: number;
+    cartItems: number;
   };
   cartItemId: number;
   count: number;
