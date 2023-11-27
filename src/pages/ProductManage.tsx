@@ -135,7 +135,7 @@ export default function ProductManage(): ReactElement {
             상품 추가
           </button>
         </div>
-        <PageButtons page={page} totalPage={totalPage} onClickPage={setPage} />
+        <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
       </div>
 
       <Popup

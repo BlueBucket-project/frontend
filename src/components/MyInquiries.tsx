@@ -95,7 +95,7 @@ export default function MyInquiries(): ReactElement {
           </div>
         </div>
       ))}
-      <PageButtons page={page} totalPage={totalPage} onClickPage={setPage} />
+      <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
     </div>
   );
 }
