@@ -10,6 +10,7 @@ import { instanceH } from "../api";
 import PageButtons from "../components/PageButtons.tsx";
 import { useAppSelector } from "../app/hooks.ts";
 import Popup from "reactjs-popup";
+import { useNavigate } from "react-router";
 
 export default function InquiryList(): ReactElement {
   const [page, setPage] = useState<number>(1);
@@ -21,6 +22,7 @@ export default function InquiryList(): ReactElement {
   const [editText, setEditText] = useState<string>("");
   const [clickedNickname, setClickedNickname] = useState<string>("");
   const accessToken = useAppSelector((state) => state.user.accessToken);
+  const navigate = useNavigate();
 
   const refreshInquiries = (nextPage: number = 1, nickname: string = "") => {
     var api = "/admins/boards";
