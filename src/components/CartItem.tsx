@@ -72,9 +72,12 @@ export function CartItem({ item, callListData }: ItemProp) {
     <>
       {item.item ? (
         <div className="grid h-40 w-full grid-cols-7 items-center justify-between gap-4 border-b py-8">
-          <div className="h-28 w-28 rounded-lg bg-blue-100">
+          <div className="h-28 w-28 rounded-lg">
             {item.item.itemImgList && item.item.itemImgList?.length > 0 ? (
-              <img src={item.item.itemImgList[0].uploadImgUrl} />
+              <img
+                className="mx-auto h-full"
+                src={item.item.itemImgList[0].uploadImgUrl}
+              />
             ) : (
               "이미지가 없습니다."
             )}

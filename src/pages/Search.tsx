@@ -11,33 +11,25 @@ interface Items extends Array<Item> {}
 
 export default function Search() {
   const [sp, ssp] = useSearchParams();
-  const item = sp.get("itemName");
   const [searchResult, setSearchResult] = useState<Items>([]);
-  const [searchValue, setSearchValue] = useState({
-    itemName: item,
-    startPrice: "",
-    endPrice: "",
-    itemPlace: "",
-  });
-
-  const { itemName, startPrice, endPrice, itemPlace } = searchValue;
-
-  useEffect(() => {
-    getSearchData();
-  }, []);
-
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setSearchValue({
-      ...searchValue,
-      [name]: value,
-    });
-  };
+  const [itemName, setItemName] = useState("");
+  const [startPrice, setStartPrice] = useState("");
+  const [endPrice, setEndPrice] = useState("");
+  const [itemPlace, setItemPlace] = useState("");
+  const name = sp.get("itemName");
+  const startp = sp.get("startPrice");
+  const endp = sp.get("endPrice");
+  const place = sp.get("itemPlace");
 
   function getSearchData() {
     instance
       .get(`/items/search`, {
-        params: { itemName, startPrice, endPrice, itemPlace },
+        params: {
+          itemName: name,
+          startPrice: startp,
+          endPrice: endp,
+          itemPlace: place,
+        },
       })
       .then((res) => {
         setSearchResult(res.data.items);
@@ -47,12 +39,16 @@ export default function Search() {
       });
   }
 
-  const onSubmit = () => {
+  useEffect(() => {
+    setItemName(name);
+    setStartPrice(startp);
+    setEndPrice(endp);
+    setItemPlace(place);
     getSearchData();
-  };
+  }, []);
 
   return (
-    <>
+    <div>
       <Header />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
         <form className="flex w-full items-center justify-between py-4">
@@ -60,7 +56,8 @@ export default function Search() {
             <label className="mr-4">검색어</label>
             <input
               name="itemName"
-              onChange={handleInput}
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
               className="w-32 border"
             />
           </div>
@@ -69,7 +66,8 @@ export default function Search() {
             <span>
               <input
                 name="startPrice"
-                onChange={handleInput}
+                value={startPrice}
+                onChange={(e) => setStartPrice(e.target.value)}
                 className="w-32 border"
               />
               원
@@ -78,7 +76,8 @@ export default function Search() {
             <span>
               <input
                 name="endPrice"
-                onChange={handleInput}
+                value={endPrice}
+                onChange={(e) => setEndPrice(e.target.value)}
                 className="w-32 border"
               />
               원
@@ -88,18 +87,19 @@ export default function Search() {
             <label className="mr-4">지역</label>
             <input
               name="itemPlace"
-              onChange={handleInput}
+              value={itemPlace}
+              onChange={(e) => setItemPlace(e.target.value)}
               className="w-32 border"
             />
           </div>
           <div>
-            <button onSubmit={onSubmit}>
+            <button type="submit">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
           </div>
         </form>
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 text-4xl font-bold">
-          <span>"{item}" 에 대한 검색 결과</span>
+          <span>"{name}" 에 대한 검색 결과</span>
         </div>
         <div>
           <input className="my-8 mr-4" type="checkbox" />
@@ -115,6 +115,6 @@ export default function Search() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
