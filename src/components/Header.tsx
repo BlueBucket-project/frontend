@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import React, { ReactElement, useState } from "react";
-//import Logo from "./Logo.tsx";
 import Logo from "../../public/logotext.png";
 import {
   faCartShopping,
