@@ -5,6 +5,7 @@ import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks";
 import { IBoardList, Item } from "../responseTypes";
 import { QNABoard } from "../components/QNABoard";
+import Popup from "reactjs-popup";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -18,6 +19,8 @@ export default function ItemDetail() {
   const [isfold, setIsfold] = useState(true);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const email = useAppSelector((state) => state.user.memberEmail);
@@ -120,7 +123,11 @@ export default function ItemDetail() {
                 <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
                   <div className="group relative flex h-full w-full justify-between">
                     {imgdata && imgdata.length > 0 ? (
-                      <img src={imgdata[focusedImg].uploadImgUrl} />
+                      <img
+                        onClick={() => setIsModalOpened(true)}
+                        src={imgdata[focusedImg].uploadImgUrl}
+                        className="mx-auto h-full hover:cursor-pointer"
+                      />
                     ) : (
                       "이미지가 없습니다."
                     )}
@@ -142,6 +149,19 @@ export default function ItemDetail() {
                     )}
                   </div>
                 </div>
+                <Popup
+                  open={isModalOpened}
+                  onClose={() => setIsModalOpened(false)}
+                  modal
+                  {...{ overlayStyle }}
+                >
+                  <div className="w-content h-screen">
+                    <img
+                      src={imgdata[focusedImg].uploadImgUrl}
+                      className="mx-auto h-full"
+                    />
+                  </div>
+                </Popup>
                 <div className="my-4 flex">
                   {imgdata.map((item) => {
                     return (
