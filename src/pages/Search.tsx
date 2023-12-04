@@ -10,7 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 interface Items extends Array<Item> {}
 
 export default function Search() {
-  const [sp, ssp] = useSearchParams();
+  const [sp] = useSearchParams();
   const [searchResult, setSearchResult] = useState<Items>([]);
   const [itemName, setItemName] = useState("");
   const [startPrice, setStartPrice] = useState("");
@@ -40,10 +40,10 @@ export default function Search() {
   }
 
   useEffect(() => {
-    setItemName(name);
-    setStartPrice(startp);
-    setEndPrice(endp);
-    setItemPlace(place);
+    setItemName(name || "");
+    setStartPrice(startp || "");
+    setEndPrice(endp || "");
+    setItemPlace(place || "");
     getSearchData();
   }, []);
 
