@@ -52,10 +52,13 @@ export default function Register(): ReactElement {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="mb-5 h-32 w-48">
+      <div
+        className="mb-5 h-32 w-48 hover:cursor-pointer"
+        onClick={() => navigate("/")}
+      >
         <Logo />
       </div>
-      <div className="w-2/5 border p-10 text-center text-xl">
+      <div className="w-2/5 border border-blue-200 p-10 text-center text-xl">
         <div className="m-auto flex w-full flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="w-28 text-left">이메일</div>

@@ -4,6 +4,7 @@ import { ReactElement, useRef, useEffect, useState } from "react";
 import { instance } from "../api/index.ts";
 import { Item } from "../responseTypes.ts";
 import useInfiniteScroll from "../components/useInfinitescroll.ts";
+import Sidenav from "../components/Sidenav.tsx";
 
 interface Items extends Array<Item> {}
 
@@ -32,6 +33,7 @@ function Home(): ReactElement {
   return (
     <>
       <Header />
+      <Sidenav />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
         <div className="flex h-36 w-full items-center justify-center border-b-2 border-gray-100 py-4 font-sans text-4xl font-bold">
           <span>방금 올라온 물건들</span>
