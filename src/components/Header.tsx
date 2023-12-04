@@ -27,7 +27,8 @@ function Header() {
     setItem(value);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (item === "") {
       navigate("/");
     } else {
