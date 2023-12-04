@@ -12,16 +12,21 @@ interface Items extends Array<Item> {}
 export default function Search() {
   const [sp] = useSearchParams();
   const [searchResult, setSearchResult] = useState<Items>([]);
-  const [itemName, setItemName] = useState("");
-  const [startPrice, setStartPrice] = useState("");
-  const [endPrice, setEndPrice] = useState("");
-  const [itemPlace, setItemPlace] = useState("");
-  const name = sp.get("itemName");
-  const startp = sp.get("startPrice");
-  const endp = sp.get("endPrice");
-  const place = sp.get("itemPlace");
+  const [itemName, setItemName] = useState<string>("");
+  const [startPrice, setStartPrice] = useState<string>("");
+  const [endPrice, setEndPrice] = useState<string>("");
+  const [itemPlace, setItemPlace] = useState<string>("");
+  const name = sp.get("itemName") || "";
+  const startp = sp.get("startPrice") || "";
+  const endp = sp.get("endPrice") || "";
+  const place = sp.get("itemPlace") || "";
 
-  function getSearchData() {
+  function getSearchData(
+    name: string,
+    startp: string,
+    endp: string,
+    place: string,
+  ) {
     instance
       .get(`/items/search`, {
         params: {
@@ -40,18 +45,23 @@ export default function Search() {
   }
 
   useEffect(() => {
-    setItemName(name || "");
-    setStartPrice(startp || "");
-    setEndPrice(endp || "");
-    setItemPlace(place || "");
-    getSearchData();
-  }, []);
+    setItemName(name);
+    setStartPrice(startp);
+    setEndPrice(endp);
+    setItemPlace(place);
+    getSearchData(name, startp, endp, place);
+  }, [sp]);
 
   return (
     <div>
       <Header />
       <div className="mx-auto mt-4 h-screen min-w-max max-w-5xl">
-        <form className="flex w-full items-center justify-between py-4">
+        <form
+          className="flex w-full items-center justify-between py-4"
+          onSubmit={() =>
+            getSearchData(itemName, startPrice, endPrice, itemPlace)
+          }
+        >
           <div>
             <label className="mr-4">검색어</label>
             <input
