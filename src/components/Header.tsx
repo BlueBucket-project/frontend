@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import React, { ReactElement, useState } from "react";
-//import Logo from "./Logo.tsx";
 import Logo from "../../public/logotext.png";
 import {
   faCartShopping,
@@ -46,7 +45,7 @@ function Header() {
       return (
         <div className="flex h-full items-center justify-end">
           <Link to="/login">
-            <div className="flex w-14 flex-col items-center gap-1 text-sm">
+            <div className="flex w-14 flex-col items-center gap-1 text-xs">
               <FontAwesomeIcon icon={faRightToBracket} className="h-8 w-8" />
               <div>로그인</div>
             </div>
@@ -57,33 +56,33 @@ function Header() {
 
     if (user.role === "ROLE_ADMIN") {
       return (
-        <div className="flex h-full items-center justify-end gap-2">
+        <div className="flex h-full items-center justify-end gap-1 text-[10px]">
           <Link to="/admin/purchase">
-            <div className="flex w-14 flex-col items-center gap-1 text-xs">
+            <div className="flex w-11 flex-col items-center gap-1">
               <FontAwesomeIcon icon={faMoneyCheckDollar} className="h-8 w-8" />
               <div>상품주문</div>
             </div>
           </Link>
           <Link to="/admin/product">
-            <div className="flex w-16 flex-col items-center gap-1 text-xs">
+            <div className="flex w-11 flex-col items-center gap-1">
               <FontAwesomeIcon icon={faGift} className="h-8 w-8" />
               <div>상품관리</div>
             </div>
           </Link>
           <Link to="/admin/inquiries">
-            <div className="flex w-16 flex-col items-center gap-1 text-xs">
+            <div className="flex w-11 flex-col items-center gap-1">
               <FontAwesomeIcon icon={faClipboardQuestion} className="h-8 w-8" />
               <div>문의관리</div>
             </div>
           </Link>
           <Link to="/mypage/edit">
-            <div className="flex w-16 flex-col items-center gap-1 text-xs">
+            <div className="flex w-11 flex-col items-center gap-1">
               <FontAwesomeIcon icon={faUser} className="h-8 w-8" />
               <div>마이페이지</div>
             </div>
           </Link>
           <div
-            className="flex w-16 flex-col items-center gap-1 text-xs hover:cursor-pointer"
+            className="flex w-11 flex-col items-center gap-1 hover:cursor-pointer"
             onClick={() => onClickLogout()}
           >
             <FontAwesomeIcon icon={faRightFromBracket} className="h-8 w-8" />

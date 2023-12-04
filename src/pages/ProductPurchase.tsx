@@ -6,6 +6,9 @@ import PageButtons from "../components/PageButtons.tsx";
 import { useNavigate } from "react-router-dom";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Popup from "reactjs-popup";
+
+const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
 export default function ProductPurchase(): ReactElement {
   const [page, setPage] = useState<number>(1);
@@ -13,10 +16,12 @@ export default function ProductPurchase(): ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPage, setTotalPage] = useState<number>(0);
   const [checkedIndex, setCheckedIndex] = useState<boolean[]>([]);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [purchaseIndex, setPurchaseIndex] = useState<number[]>([]);
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const navigate = useNavigate();
 
-  const search = () => {
+  const search = (email: string) => {
     const api = `/admins/search?itemSellStatus=RESERVED&page=${page}${
       email.length > 0 ? `&itemReserver=${email}` : ""
     }`;
@@ -33,9 +38,13 @@ export default function ProductPurchase(): ReactElement {
       });
   };
 
-  const purchase = (...arr: number[]) => {
+  const onClickPurchase = () => {
+    setIsModalOpened(true);
+  };
+
+  const purchase = () => {
     const body: any[] = [];
-    arr.forEach((i) =>
+    purchaseIndex.forEach((i) =>
       body.push({
         count: products[i].itemRamount,
         itemId: products[i].itemId,
@@ -44,11 +53,15 @@ export default function ProductPurchase(): ReactElement {
     );
     instanceH(accessToken)
       .post("/admins/orderItem", body)
-      .then(() => {});
+      .then((res) => {
+        console.log(res);
+        setEmail("");
+        search("");
+      });
   };
 
   useEffect(() => {
-    search();
+    search(email);
   }, [page]);
 
   return (
@@ -64,7 +77,7 @@ export default function ProductPurchase(): ReactElement {
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  search();
+                  search(email);
                 }
               }}
               className="bg-gray-200 pl-2"
@@ -74,7 +87,7 @@ export default function ProductPurchase(): ReactElement {
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               className="rounded-xl border px-1 py-1 hover:cursor-pointer"
-              onClick={() => search()}
+              onClick={() => search(email)}
             />
           </div>
         </div>
@@ -144,7 +157,10 @@ export default function ProductPurchase(): ReactElement {
             <div className="col-span-1">
               <button
                 className="h-8 w-20 rounded bg-blue-200"
-                onClick={() => purchase(i)}
+                onClick={() => {
+                  setPurchaseIndex([i]);
+                  onClickPurchase();
+                }}
               >
                 구매 확정
               </button>
@@ -158,13 +174,45 @@ export default function ProductPurchase(): ReactElement {
               const arr: number[] = checkedIndex
                 .map((b, i) => (b ? i : -1))
                 .filter((i) => i != -1);
-              purchase(...arr);
+              if (arr.length > 0) {
+                setPurchaseIndex(arr);
+                onClickPurchase();
+              }
             }}
           >
             선택한 항목 구매 확정
           </button>
         </div>
-        <PageButtons page={page} totalPage={totalPage} onClickPage={setPage} />
+        <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
+        <Popup
+          open={isModalOpened}
+          onClose={() => setIsModalOpened(false)}
+          modal
+          {...{ overlayStyle }}
+        >
+          <div className="flex h-36 w-80 flex-col items-center justify-center rounded bg-white text-xl">
+            <div className="mb-4">구매확정 하시겠습니까?</div>
+            <div className="flex gap-2">
+              <button
+                className="w-20 rounded bg-red-300"
+                onClick={() => {
+                  setIsModalOpened(false);
+                }}
+              >
+                취소
+              </button>
+              <button
+                className="w-20 rounded bg-blue-300"
+                onClick={() => {
+                  purchase();
+                  setIsModalOpened(false);
+                }}
+              >
+                구매 확정
+              </button>
+            </div>
+          </div>
+        </Popup>
       </div>
     </>
   );
