@@ -59,7 +59,7 @@ export default function PageButtons2({
           {i}
         </div>
       ))}
-      {Math.floor(totalPage / 5) > Math.floor((page - 1) / 5) ? (
+      {Math.floor((totalPage - 1) / 5) > Math.floor((page - 1) / 5) ? (
         <>
           <div
             className="h-10 w-10 rounded border border-b leading-10"
