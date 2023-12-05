@@ -22,6 +22,7 @@ export default function ItemDetail() {
   const [content, setContent] = useState("");
   const [isModalOpened, setIsModalOpened] = useState(false);
   const overlayStyle = { background: "rgba(0,0,0,0.5)" };
+  const userRole = useAppSelector((state) => state.user.role);
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const email = useAppSelector((state) => state.user.memberEmail);
@@ -37,12 +38,21 @@ export default function ItemDetail() {
       });
   }
   function getBoardData() {
-    instanceH(accessToken)
-      .get(`/${itemId}/boards`, { params: { email } })
-      .then((res) => {
-        setTotalPage(res.data.totalPage);
-        setBoard(res.data);
-      });
+    if (userRole === "ROLE_USER") {
+      instanceH(accessToken)
+        .get(`/${itemId}/boards`, { params: { email } })
+        .then((res) => {
+          setTotalPage(res.data.totalPage);
+          setBoard(res.data);
+        });
+    } else {
+      instanceH(accessToken)
+        .get(`/admins/${itemId}/boards`, { params: { email } })
+        .then((res) => {
+          setTotalPage(res.data.totalPage);
+          setBoard(res.data);
+        });
+    }
   }
 
   useEffect(() => {
@@ -221,7 +231,9 @@ export default function ItemDetail() {
             </div>
             <div className="mb-8" id="상세설명">
               <div className="my-4 text-lg font-semibold">판매자 상품 설명</div>
-              <div className="my-4">{item!.itemDetail}</div>
+              <div className="my-4 whitespace-pre-line break-all">
+                {item!.itemDetail}
+              </div>
             </div>
             <div className="my-4" id="QA">
               <div className="my-4 text-lg font-bold">Q&A</div>

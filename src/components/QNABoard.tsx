@@ -90,7 +90,9 @@ export function QNABoard({ item, rerender }: BoardProps) {
         <div>{item.nickName.replace(/(?<=.{2})./gi, "*")}</div>
         <div>{item.regTime.slice(0, 10)}</div>
       </div>
-      {seeReply && item.commentDTOList.length > 0 ? (
+      {seeReply &&
+      item.commentDTOList.length > 0 &&
+      item.boardSecret !== "LOCK" ? (
         <div
           onClick={() => setSeeReply(!seeReply)}
           className="block grid  grid-cols-10 border-b border-b-gray-400 bg-blue-50 py-4 text-center hover:cursor-pointer"
