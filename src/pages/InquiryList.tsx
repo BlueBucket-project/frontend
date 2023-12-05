@@ -10,6 +10,7 @@ import { instanceH } from "../api";
 import PageButtons from "../components/PageButtons.tsx";
 import { useAppSelector } from "../app/hooks.ts";
 import Popup from "reactjs-popup";
+import PageButtons2 from "../components/PageButtons2.tsx";
 
 export default function InquiryList(): ReactElement {
   const [page, setPage] = useState<number>(1);
@@ -30,7 +31,6 @@ export default function InquiryList(): ReactElement {
     instanceH(accessToken)
       .get(`${api}?page=${nextPage}`)
       .then((res) => {
-        console.log(res);
         const inquiriesResponse: InquiriesResponse = res.data;
         setTotalPage(inquiriesResponse.totalPage);
         setInquiries(inquiriesResponse.items);
@@ -276,7 +276,7 @@ export default function InquiryList(): ReactElement {
             </div>
           </div>
         ))}
-        <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
+        <PageButtons2 page={page} totalPage={totalPage} setPage={setPage} />
       </div>
     </>
   );
