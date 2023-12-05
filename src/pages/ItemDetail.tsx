@@ -40,14 +40,14 @@ export default function ItemDetail() {
   function getBoardData() {
     if (userRole === "ROLE_USER") {
       instanceH(accessToken)
-        .get(`/${itemId}/boards`, { params: { email } })
+        .get(`/${itemId}/boards?page=${page}`, { params: { email } })
         .then((res) => {
           setTotalPage(res.data.totalPage);
           setBoard(res.data);
         });
     } else {
       instanceH(accessToken)
-        .get(`/admins/${itemId}/boards`, { params: { email } })
+        .get(`/admins/${itemId}/boards?page=${page}`, { params: { email } })
         .then((res) => {
           setTotalPage(res.data.totalPage);
           setBoard(res.data);
@@ -57,8 +57,10 @@ export default function ItemDetail() {
 
   useEffect(() => {
     getItemDetailData();
-    getBoardData();
   }, []);
+  useEffect(() => {
+    getBoardData();
+  }, [page]);
 
   function stockoption(SN: number) {
     const optionarr = [];
