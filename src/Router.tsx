@@ -15,73 +15,80 @@ import MyInquiries from "./components/MyInquiries.tsx";
 import Withdrawal from "./components/Withdrawal.tsx";
 import ProductCreate from "./pages/ProductCreate.tsx";
 import ProductPurchase from "./pages/ProductPurchase.tsx";
+import Layout from "./pages/Layout.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/search/*",
-    element: <Search />,
-  },
-  {
-    path: "/item/:itemId",
-    element: <ItemDetail />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
-  },
-  {
-    path: "/mypage",
-    element: <MyPage />,
+    element: <Layout />,
     children: [
       {
-        path: "history",
-        element: <History />,
+        path: "/",
+        element: <Home />,
       },
       {
-        path: "inquiries",
-        element: <MyInquiries />,
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: "edit",
-        element: <EditProfile />,
+        path: "/register",
+        element: <Register />,
       },
       {
-        path: "withdrawal",
-        element: <Withdrawal />,
+        path: "/search/*",
+        element: <Search />,
+      },
+      {
+        path: "/item/:itemId",
+        element: <ItemDetail />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/mypage",
+        element: <MyPage />,
+        children: [
+          {
+            path: "history",
+            element: <History />,
+          },
+          {
+            path: "inquiries",
+            element: <MyInquiries />,
+          },
+          {
+            path: "edit",
+            element: <EditProfile />,
+          },
+          {
+            path: "withdrawal",
+            element: <Withdrawal />,
+          },
+        ],
+      },
+      {
+        path: "admin/inquiries",
+        element: <InquiryList />,
+      },
+      {
+        path: "admin/purchase",
+        element: <ProductPurchase />,
+      },
+      {
+        path: "/admin/product",
+        element: <ProductManage />,
+      },
+      {
+        path: "/admin/product/create",
+        element: <ProductCreate />,
+      },
+      {
+        path: "/admin/product/edit/:productId",
+        element: <ProductEdit />,
       },
     ],
-  },
-  {
-    path: "admin/inquiries",
-    element: <InquiryList />,
-  },
-  {
-    path: "admin/purchase",
-    element: <ProductPurchase />,
-  },
-  {
-    path: "/admin/product",
-    element: <ProductManage />,
-  },
-  {
-    path: "/admin/product/create",
-    element: <ProductCreate />,
-  },
-  {
-    path: "/admin/product/edit/:productId",
-    element: <ProductEdit />,
   },
 ]);
 
