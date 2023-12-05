@@ -40,6 +40,9 @@ export default function ProductEditor({
       "key",
       new Blob([JSON.stringify(product)], { type: "application/json" }),
     );
+    if (files.length <= 0) {
+      form.append("files", new Blob([]));
+    }
     files.forEach((f) => {
       form.append("files", new Blob([f]));
     });
@@ -59,9 +62,13 @@ export default function ProductEditor({
       "key",
       new Blob([JSON.stringify(product)], { type: "application/json" }),
     );
+    if (files.length <= 0) {
+      form.append("files", new Blob([]));
+    }
     files.forEach((f) => {
       form.append("files", new Blob([f]));
     });
+    console.log(form);
     instanceH(accessToken)
       .put(`/items/${product.itemId}`, form, {
         headers: { "Content-Type": "multipart/form-data" },
