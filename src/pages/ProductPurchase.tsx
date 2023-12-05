@@ -169,7 +169,7 @@ export default function ProductPurchase(): ReactElement {
         ))}
         <div className="flex justify-end">
           <button
-            className="mr-3 mt-4 h-8 w-40 rounded bg-blue-200"
+            className="mr-3 mt-4 h-8 w-44 rounded bg-blue-200"
             onClick={() => {
               const arr: number[] = checkedIndex
                 .map((b, i) => (b ? i : -1))

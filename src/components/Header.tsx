@@ -77,7 +77,7 @@ function Header() {
             </div>
           </Link>
           <Link to="/mypage/edit">
-            <div className="flex w-11 flex-col items-center gap-1">
+            <div className="flex w-14 flex-col items-center gap-1">
               <FontAwesomeIcon icon={faUser} className="h-8 w-8" />
               <div>마이페이지</div>
             </div>

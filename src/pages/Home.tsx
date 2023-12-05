@@ -43,9 +43,13 @@ function Home(): ReactElement {
           className="mx-auto my-8 grid max-w-4xl grid-cols-3 gap-8"
         >
           {items && items.length > 0 ? (
-            items.map((item) => {
-              return <Card item={item} key={item.itemId} />;
-            })
+            items
+              .filter((item) => {
+                return item.itemSellStatus !== "SOLD_OUT";
+              })
+              .map((item) => {
+                return <Card item={item} key={item.itemId} />;
+              })
           ) : (
             <div>상품이 없습니다</div>
           )}

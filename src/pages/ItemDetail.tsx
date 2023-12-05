@@ -120,7 +120,7 @@ export default function ItemDetail() {
           <>
             <div className="flex justify-start">
               <div>
-                <div className="mr-16 h-96 w-96 rounded bg-blue-100 ">
+                <div className="mr-16 h-96 w-96 rounded">
                   <div className="group relative flex h-full w-full justify-between">
                     {imgdata && imgdata.length > 0 ? (
                       <img

@@ -33,6 +33,9 @@ export default function Cart() {
           }),
         );
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }
 
@@ -94,7 +97,7 @@ export default function Cart() {
     <>
       <Header />
       {loading ? (
-        <div>로딩중</div>
+        <div className="mx-auto mt-4 min-w-max max-w-5xl ">로딩중</div>
       ) : (
         <div className="mx-auto mt-4 min-w-max max-w-5xl ">
           <div className="mt-8 w-full border-b-2 pb-4">
@@ -110,15 +113,19 @@ export default function Cart() {
           {state == "wait" ? (
             <>
               <div className="">
-                {waitlist.map((item) => {
-                  return (
-                    <CartItem
-                      item={item}
-                      callListData={callListData}
-                      key={item.cartItemId}
-                    />
-                  );
-                })}
+                {waitlist.length > 0 ? (
+                  waitlist.map((item) => {
+                    return (
+                      <CartItem
+                        item={item}
+                        callListData={callListData}
+                        key={item.cartItemId}
+                      />
+                    );
+                  })
+                ) : (
+                  <div className="my-4">장바구니가 비었습니다.</div>
+                )}
               </div>
               <div className="mt-8 w-full">
                 <button
@@ -132,57 +139,61 @@ export default function Cart() {
           ) : (
             <>
               <div className="">
-                {reservedList.map((item) => {
-                  return (
-                    <div
-                      key={item.cartItemId}
-                      className="grid h-40 w-full grid-cols-8 items-center justify-between gap-4 border-b py-8"
-                    >
-                      <div className="h-28 w-28 rounded-lg bg-blue-100 ">
-                        {item.item.itemImgList &&
-                        item.item.itemImgList?.length > 0 ? (
-                          <img src={item.item.itemImgList[0].uploadImgUrl} />
-                        ) : (
-                          "이미지가 없습니다."
-                        )}
-                      </div>
-                      <div className="col-span-4 col-start-2 flex-col justify-between ">
-                        <div className="mb-4 w-96 text-xl">
-                          {item.item.itemName}
+                {reservedList.length > 0 ? (
+                  reservedList.map((item) => {
+                    return (
+                      <div
+                        key={item.cartItemId}
+                        className="grid h-40 w-full grid-cols-8 items-center justify-between gap-4 border-b py-8"
+                      >
+                        <div className="h-28 w-28 rounded-lg bg-blue-100 ">
+                          {item.item.itemImgList &&
+                          item.item.itemImgList?.length > 0 ? (
+                            <img src={item.item.itemImgList[0].uploadImgUrl} />
+                          ) : (
+                            "이미지가 없습니다."
+                          )}
+                        </div>
+                        <div className="col-span-4 col-start-2 flex-col justify-between ">
+                          <div className="mb-4 w-96 text-xl">
+                            {item.item.itemName}
+                          </div>
+                          <div className="text-xl">
+                            {item.item.price
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            원
+                          </div>
                         </div>
                         <div className="text-xl">
-                          {item.item.price
+                          <div>{item.count}개</div>
+                        </div>
+                        <div className="text-xl">
+                          {(item.count * item.item.price)
                             .toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           원
                         </div>
+                        <div className="flex flex-col items-center">
+                          <button
+                            onClick={() => cartItemDelete(item)}
+                            className="mb-4 h-10 w-28 rounded-xl bg-red-100"
+                          >
+                            취소
+                          </button>
+                          <button
+                            className="h-10 w-28 rounded-xl bg-blue-100"
+                            onClick={() => reserveItemCart(item.cartItemId)}
+                          >
+                            장바구니
+                          </button>
+                        </div>
                       </div>
-                      <div className="text-xl">
-                        <div>{item.count}개</div>
-                      </div>
-                      <div className="text-xl">
-                        {(item.count * item.item.price)
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        원
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <button
-                          onClick={() => cartItemDelete(item)}
-                          className="mb-4 h-10 w-28 rounded-xl bg-red-100"
-                        >
-                          취소
-                        </button>
-                        <button
-                          className="h-10 w-28 rounded-xl bg-blue-100"
-                          onClick={() => reserveItemCart(item.cartItemId)}
-                        >
-                          장바구니
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                ) : (
+                  <div className="my-4">예약중인 물건이 없습니다.</div>
+                )}
               </div>
               <div className="mt-8 w-full">
                 <button
