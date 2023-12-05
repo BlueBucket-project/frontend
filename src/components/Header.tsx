@@ -119,25 +119,27 @@ function Header() {
   };
 
   return (
-    <div className="sticky left-0 right-0 top-0 z-10 mx-auto my-4 grid h-32 w-full max-w-5xl grid-cols-3 items-center justify-center bg-white p-2">
-      <Link to="/" className="block h-20 w-56 justify-self-start">
-        {/* <Logo /> */}
-        <img className="h-full w-full" src={`${Logo}`} />
-      </Link>
-      <div className="h-full w-96 ">
-        <form className="flex h-full w-full" onSubmit={onSubmit}>
-          <input
-            id="headerSearch"
-            type="text"
-            minLength={2}
-            className="my-auto h-12 w-full bg-gray-200 p-2 text-xl focus:outline-none"
-            placeholder="물건 이름이나 태그를 검색해보세요"
-            onChange={onChange}
-          ></input>
-          <button hidden></button>
-        </form>
+    <div className="sticky left-0 right-0 top-0 z-10 w-full bg-white">
+      <div className="mx-auto my-4 grid h-32  max-w-5xl grid-cols-3 items-center justify-center  p-2">
+        <Link to="/" className="block h-20 w-56 justify-self-start">
+          {/* <Logo /> */}
+          <img className="h-full w-full" src={`${Logo}`} />
+        </Link>
+        <div className="h-full w-96 ">
+          <form className="flex h-full w-full" onSubmit={onSubmit}>
+            <input
+              id="headerSearch"
+              type="text"
+              minLength={2}
+              className="my-auto h-12 w-full bg-gray-200 p-2 text-xl focus:outline-none"
+              placeholder="물건 이름이나 태그를 검색해보세요"
+              onChange={onChange}
+            ></input>
+            <button hidden></button>
+          </form>
+        </div>
+        <div className="justify-self-end">{renderLinks()}</div>
       </div>
-      <div className="justify-self-end">{renderLinks()}</div>
     </div>
   );
 }
