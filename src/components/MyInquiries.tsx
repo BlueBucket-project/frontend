@@ -9,6 +9,7 @@ import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks.ts";
 import PageButtons from "./PageButtons.tsx";
 import Popup from "reactjs-popup";
+import { Link } from "react-router-dom";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
@@ -67,9 +68,10 @@ export default function MyInquiries(): ReactElement {
       </div>
       <div className="grid h-10 grid-cols-7 border-b border-black text-center leading-10">
         <div className="col-span-1">답변상태</div>
-        <div className="col-span-4">제목</div>
+        <div className="col-span-3">제목</div>
         <div className="col-span-1">작성자</div>
         <div className="col-span-1">작성일</div>
+        <div className="col-span-1" />
       </div>
       {inquiries.map((inquiry, index) => (
         <div
@@ -81,7 +83,7 @@ export default function MyInquiries(): ReactElement {
               {inquiry.commentDTOList.length > 0 ? "답변완료" : "미답변"}
             </div>
             <div
-              className="col-span-4 flex flex-col gap-2 place-self-start self-center justify-self-stretch whitespace-pre-line break-all"
+              className="col-span-3 flex flex-col gap-2 place-self-start self-center justify-self-stretch whitespace-pre-line break-all"
               onClick={() => {
                 if (selectedInquiryIndex === index) {
                   setSelectedInquiryIndex(-1);
@@ -126,6 +128,13 @@ export default function MyInquiries(): ReactElement {
             </div>
             <div className="col-span-1 text-center">
               {inquiry.regTime.split("T")[0]}
+            </div>
+            <div className="col-span-1 text-center">
+              <Link to={`/item/${inquiry.itemId}`}>
+                <button className="rounded-4 rounded-lg bg-blue-100 p-2">
+                  상품 정보
+                </button>
+              </Link>
             </div>
           </div>
           <div hidden={selectedInquiryIndex !== index}>
