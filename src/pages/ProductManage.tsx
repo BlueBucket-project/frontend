@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import Popup from "reactjs-popup";
 import PageButtons from "../components/PageButtons.tsx";
+import PageButtons2 from "../components/PageButtons2.tsx";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
 
@@ -59,9 +60,10 @@ export default function ProductManage(): ReactElement {
         <div className="flex justify-between border-b pb-2">
           <div className="text-3xl">상품 관리</div>
           <select
-            onChange={(e) =>
-              setQueryProductStatus(e.target.value as ProductStatus)
-            }
+            onChange={(e) => {
+              setPage(1);
+              setQueryProductStatus(e.target.value as ProductStatus);
+            }}
           >
             <option value="SELL">판매중</option>
             <option value="RESERVED">예약중</option>
@@ -135,7 +137,7 @@ export default function ProductManage(): ReactElement {
             상품 추가
           </button>
         </div>
-        <PageButtons page={page} totalPage={totalPage} setPage={setPage} />
+        <PageButtons2 page={page} totalPage={totalPage} setPage={setPage} />
       </div>
 
       <Popup
