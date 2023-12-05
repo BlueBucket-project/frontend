@@ -18,9 +18,17 @@ function Card({ item }: ItemProps) {
           <div>이미지가 없습니다</div>
         )}
       </div>
-      <div className="mt-2 text-lg font-bold">{item.itemName}</div>
+      <div className="mt-2 text-lg font-bold">
+        {item.itemSellStatus == "RESERVED" ? (
+          <span className="text-gray-400">[예약중] {item.itemName}</span>
+        ) : (
+          `${item.itemName}`
+        )}
+      </div>
       <div className="text-slate-400">{item.sellPlace}</div>
-      <div className="font-semibold text-orange-400">{item.price}</div>
+      <div className="font-semibold text-orange-400">
+        {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      </div>
     </Link>
   );
 }
