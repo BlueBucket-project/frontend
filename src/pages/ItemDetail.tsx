@@ -6,6 +6,7 @@ import { useAppSelector } from "../app/hooks";
 import { IBoardList, Item } from "../responseTypes";
 import { QNABoard } from "../components/QNABoard";
 import Popup from "reactjs-popup";
+import PageButtons2 from "../components/PageButtons2";
 
 export default function ItemDetail() {
   const { itemId } = useParams();
@@ -21,9 +22,12 @@ export default function ItemDetail() {
   const [content, setContent] = useState("");
   const [isModalOpened, setIsModalOpened] = useState(false);
   const overlayStyle = { background: "rgba(0,0,0,0.5)" };
+  const userRole = useAppSelector((state) => state.user.role);
 
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const email = useAppSelector((state) => state.user.memberEmail);
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(0);
 
   function getItemDetailData() {
     instanceH(accessToken)
@@ -34,11 +38,21 @@ export default function ItemDetail() {
       });
   }
   function getBoardData() {
-    instanceH(accessToken)
-      .get(`/${itemId}/boards`, { params: { email } })
-      .then((res) => {
-        setBoard(res.data);
-      });
+    if (userRole === "ROLE_USER") {
+      instanceH(accessToken)
+        .get(`/${itemId}/boards`, { params: { email } })
+        .then((res) => {
+          setTotalPage(res.data.totalPage);
+          setBoard(res.data);
+        });
+    } else {
+      instanceH(accessToken)
+        .get(`/admins/${itemId}/boards`, { params: { email } })
+        .then((res) => {
+          setTotalPage(res.data.totalPage);
+          setBoard(res.data);
+        });
+    }
   }
 
   useEffect(() => {
@@ -217,11 +231,13 @@ export default function ItemDetail() {
             </div>
             <div className="mb-8" id="상세설명">
               <div className="my-4 text-lg font-semibold">판매자 상품 설명</div>
-              <div className="my-4">{item!.itemDetail}</div>
+              <div className="my-4 whitespace-pre-line break-all">
+                {item!.itemDetail}
+              </div>
             </div>
             <div className="my-4" id="QA">
               <div className="my-4 text-lg font-bold">Q&A</div>
-              <div className="border-y border-t-2 border-t-black">
+              <div className="border-t border-t-2 border-t-black">
                 <div className="grid grid-cols-10 border-b-2 border-b-gray-600 py-4 text-center text-lg font-bold">
                   <div>답변상태</div>
                   <div className="col-span-7 col-start-2">문의 내용</div>
@@ -243,6 +259,11 @@ export default function ItemDetail() {
                 ) : (
                   <div className="my-4 text-center">문의 사항이 없습니다.</div>
                 )}
+                <PageButtons2
+                  page={page}
+                  totalPage={totalPage}
+                  setPage={setPage}
+                />
               </div>
               {isfold ? (
                 <button
