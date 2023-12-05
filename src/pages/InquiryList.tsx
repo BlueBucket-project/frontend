@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { instanceH } from "../api";
-import PageButtons from "../components/PageButtons.tsx";
 import { useAppSelector } from "../app/hooks.ts";
 import Popup from "reactjs-popup";
 import PageButtons2 from "../components/PageButtons2.tsx";

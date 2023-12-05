@@ -5,7 +5,6 @@ import { useAppSelector } from "../app/hooks.ts";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import Popup from "reactjs-popup";
-import PageButtons from "../components/PageButtons.tsx";
 import PageButtons2 from "../components/PageButtons2.tsx";
 
 const overlayStyle = { background: "rgba(0,0,0,0.5)" };
