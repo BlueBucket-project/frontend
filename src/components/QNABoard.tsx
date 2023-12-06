@@ -15,10 +15,11 @@ export function QNABoard({ item, rerender }: BoardProps) {
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const [content, setContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const user = useAppSelector((state) => state.user);
 
   const boardDelete = () => {
     instanceH(accessToken)
-      .delete(`/${item.itemId}/boards/${item.boardId}`)
+      .delete(`/admins/boards/${item.boardId}`)
       .then(() => rerender());
   };
 
@@ -66,7 +67,8 @@ export function QNABoard({ item, rerender }: BoardProps) {
           {item.boardSecret === "LOCK" || isEditing ? null : (
             <div className="ml-4 w-48">
               <div>
-                {item.replyStatus === "REPLY_O" ? null : (
+                {item.replyStatus === "REPLY_O" ||
+                user.role === "ROLE_ADMIN" ? null : (
                   <button
                     onClick={() => {
                       setContent(item.content);

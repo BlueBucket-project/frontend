@@ -10,6 +10,7 @@ import { instanceH } from "../api";
 import { useAppSelector } from "../app/hooks.ts";
 import Popup from "reactjs-popup";
 import PageButtons2 from "../components/PageButtons2.tsx";
+import { Link } from "react-router-dom";
 
 export default function InquiryList(): ReactElement {
   const [page, setPage] = useState<number>(1);
@@ -66,6 +67,19 @@ export default function InquiryList(): ReactElement {
       .then(() => {
         setClickedNickname("");
         setIsEdit(false);
+        if (page !== 1) {
+          setPage(1);
+          return;
+        }
+        refreshInquiries();
+      });
+  };
+
+  const deleteboard = (boardId: number) => {
+    instanceH(accessToken)
+      .delete(`/admins/boards/${boardId}`)
+      .then(() => {
+        setClickedNickname("");
         if (page !== 1) {
           setPage(1);
           return;
@@ -138,7 +152,21 @@ export default function InquiryList(): ReactElement {
                   setSelectedInquiryIndex(index);
                 }}
               >
-                <div className="font-bold text-blue-600">{inquiry.title}</div>
+                <div className="flex justify-between font-bold text-blue-600">
+                  {inquiry.title}
+                  <div className="col-span-1 text-center">
+                    <Link to={`/item/${inquiry.itemId}`}>
+                      <button className="rounded-4 rounded-lg bg-blue-100 p-2 text-sm">
+                        상품 정보
+                      </button>
+                    </Link>
+                    <FontAwesomeIcon
+                      className="ml-2 h-4 w-4 self-center text-red-600 hover:cursor-pointer"
+                      onClick={() => deleteboard(inquiry.boardId)}
+                      icon={faCircleXmark}
+                    />
+                  </div>
+                </div>
                 <div>
                   {getTitle(inquiry.content, index === selectedInquiryIndex)}
                 </div>

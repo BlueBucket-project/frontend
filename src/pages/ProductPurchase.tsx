@@ -202,7 +202,7 @@ export default function ProductPurchase(): ReactElement {
                 취소
               </button>
               <button
-                className="w-20 rounded bg-blue-300"
+                className="w-24 rounded bg-blue-300"
                 onClick={() => {
                   purchase();
                   setIsModalOpened(false);
