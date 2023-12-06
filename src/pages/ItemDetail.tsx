@@ -201,18 +201,18 @@ export default function ItemDetail() {
                 <div className="border-b pb-8 text-4xl font-bold">
                   {item!.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </div>
-                <div className="mt-4 flex text-sm text-slate-600">
-                  <div className="w-24 ">위치</div>
+                <div className="mt-4 flex text-lg text-slate-600">
+                  <div className="w-28 ">위치</div>
                   <div>{item!.sellPlace}</div>
                 </div>
-                <div className="mt-4 flex text-sm text-slate-600">
-                  <div className="w-24 ">개수</div>
+                <div className="mt-4 flex text-lg text-slate-600">
+                  <div className="w-28 ">개수</div>
                   <select onChange={handlecount}>
                     {stockoption(item!.stockNumber)}
                   </select>
                 </div>
-                <div className="mt-4 flex text-sm text-slate-600">
-                  <div className="w-24 ">올라온 날짜</div>
+                <div className="mt-4 flex text-lg text-slate-600">
+                  <div className="w-28 ">올라온 날짜</div>
                   <div>{item!.regTime.slice(0, 10)}</div>
                 </div>
                 <button

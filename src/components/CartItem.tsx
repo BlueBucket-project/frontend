@@ -11,10 +11,10 @@ interface ItemProp {
 export function CartItem({ item, callListData }: ItemProp) {
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const [isEditing, setIsEditing] = useState(false);
-  const [selectCount, setSelectCount] = useState("");
+  const [selectCount, setSelectCount] = useState(1);
 
   const handlecount = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectCount(e.target.value);
+    setSelectCount(parseInt(e.target.value));
   };
 
   function stockoption(SN: number) {
