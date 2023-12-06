@@ -19,6 +19,8 @@ export default function Register(): ReactElement {
   const [mailError, setMailError] = useState<string>("");
   const [pwError, setPwError] = useState<string>("");
   const [NNError, setNNError] = useState<string>("");
+  const [emailCheck, setEmailCheck] = useState<boolean>(false);
+  const [NNCheck, setNNCheck] = useState<boolean>(false);
 
   const handleValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "id") {
@@ -89,6 +91,28 @@ export default function Register(): ReactElement {
     });
   };
 
+  const emailcheck = () => {
+    if (mailError !== "") return;
+    instance.get(`/users/email/${id}`).then((res) => {
+      setEmailCheck(res.data);
+      if (!res.data) alert("이미 있는 아이디입니다.");
+      else {
+        alert("사용할 수 있는 아이디입니다.");
+      }
+    });
+  };
+  const nickNamecheck = () => {
+    instance.get(`/users/nickName/${nickName}`).then((res) => {
+      setNNCheck(res.data);
+      if (!res.data) alert("이미 있는 닉네임입니다.");
+      else {
+        alert("사용할 수 있는 닉네임입니다.");
+      }
+    });
+  };
+
+  const isDisable = emailCheck == false || NNCheck == false;
+
   const onComplete = (data: Address) => {
     setZipCode(data.zonecode);
     setAddr(data.address);
@@ -116,6 +140,7 @@ export default function Register(): ReactElement {
               placeholder="이메일"
               className="input-base grow border-gray-400 bg-gray-100 pl-3"
             />
+            <button onClick={emailcheck}>중복확인</button>
           </div>
           {mailError && <p className="text-base text-red-400">{mailError}</p>}
           <div className="flex items-center gap-3">
@@ -151,6 +176,7 @@ export default function Register(): ReactElement {
               placeholder="닉네임"
               className="input-base grow border-gray-400 bg-gray-100 pl-3"
             />
+            <button onClick={nickNamecheck}>중복확인</button>
           </div>
           {NNError && <p className="text-base text-red-400">{NNError}</p>}
           <div className="flex items-center gap-3">
@@ -206,7 +232,8 @@ export default function Register(): ReactElement {
           <hr />
           <button
             id="btn-register"
-            className="input-base bg-blue-200"
+            className="input-base bg-blue-300 disabled:bg-blue-100"
+            disabled={isDisable}
             onClick={() => handleRegister()}
           >
             회원가입
