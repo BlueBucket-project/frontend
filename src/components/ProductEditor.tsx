@@ -93,37 +93,41 @@ export default function ProductEditor({
     setImages(nextImages);
   };
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     instance.get("/items/sellplace").then((res) => {
       setSellPlaces(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const parsedProduct: ProductDto = {
-      itemId: initialProduct.itemId,
-      itemName: initialProduct.itemName,
-      itemDetail: initialProduct.itemDetail,
-      price: initialProduct.price,
-      stockNumber: initialProduct.stockNumber,
-      sellPlace: initialProduct.sellPlace,
-    };
-    if (!isCreate) {
-      parsedProduct.itemSeller = initialProduct.itemSeller;
-      if (initialProduct.itemImgList.length > 0) {
-        parsedProduct.remainImgId = initialProduct.itemImgList.map(
-          (img) => img.itemImgId,
-        );
-        const parsedImages = initialProduct.itemImgList.map((img) => {
-          return {
-            imgId: img.itemImgId,
-            imgPath: img.uploadImgUrl,
-          };
-        });
-        setImages(parsedImages);
+      const parsedProduct: ProductDto = {
+        itemId: initialProduct.itemId,
+        itemName: initialProduct.itemName,
+        itemDetail: initialProduct.itemDetail,
+        price: initialProduct.price,
+        stockNumber: initialProduct.stockNumber,
+        sellPlace: res.data
+          .filter(
+            (p: SellPlace) =>
+              p.containerName === initialProduct.sellPlace.split("/")[0],
+          )[0]
+          .containerId.toString(),
+      };
+      if (!isCreate) {
+        parsedProduct.itemSeller = initialProduct.itemSeller;
+        if (initialProduct.itemImgList.length > 0) {
+          parsedProduct.remainImgId = initialProduct.itemImgList.map(
+            (img) => img.itemImgId,
+          );
+          const parsedImages = initialProduct.itemImgList.map((img) => {
+            return {
+              imgId: img.itemImgId,
+              imgPath: img.uploadImgUrl,
+            };
+          });
+          setImages(parsedImages);
+        }
       }
-    }
-    setProduct(parsedProduct);
+      setProduct(parsedProduct);
+    });
   }, [initialProduct]);
 
   const onUpload = (file: File) => {
@@ -168,11 +172,7 @@ export default function ProductEditor({
             name="places"
             id="places"
             className="border bg-gray-50"
-            value={
-              sellPlaces.filter(
-                (p) => p.containerName === product.sellPlace.split("/")[0],
-              )[0]?.containerId
-            }
+            value={product.sellPlace}
             onChange={(e) => {
               setProduct({ ...product, sellPlace: e.target.value });
             }}
