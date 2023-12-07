@@ -12,6 +12,7 @@ export default function EditProfile(): ReactElement {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [nickName, setNickName] = useState<string>("");
+  const [isNickNameChanged, setIsNickNameChanged] = useState<boolean>(false);
   const [zipCode, setZipCode] = useState<string>("");
   const [addr, setAddr] = useState<string>("");
   const [addrDetail, setAddrDetail] = useState<string>("");
@@ -57,14 +58,17 @@ export default function EditProfile(): ReactElement {
 
   const onSubmit = () => {
     if (password === "" && confirmPassword === "") {
-      const body = {
+      const body: any = {
         memberAddress: {
           memberZipCode: zipCode,
           memberAddr: addr,
           memberAddrDetail: addrDetail,
         },
-        nickName,
       };
+      if (isNickNameChanged) {
+        body.nickName = nickName;
+      }
+      console.log(body);
       instanceH(accessToken)
         .put(`/users/${memberId}`, body)
         .then(() => {
@@ -73,15 +77,19 @@ export default function EditProfile(): ReactElement {
     } else if (password !== confirmPassword) {
       alert("비밀번호와 2차 비밀번호가 일치하지 않습니다.");
     } else {
-      const body = {
+      const body: any = {
         memberPw: password,
         memberAddress: {
           memberZipCode: zipCode,
           memberAddr: addr,
           memberAddrDetail: addrDetail,
         },
-        nickName,
       };
+      if (isNickNameChanged) {
+        body.nickName = nickName;
+      }
+      console.log(memberId);
+      console.log(body);
       instanceH(accessToken)
         .put(`/users/${memberId}`, body)
         .then(() => {
@@ -142,7 +150,10 @@ export default function EditProfile(): ReactElement {
               type="text"
               placeholder="닉네임"
               value={nickName}
-              onChange={(e) => setNickName(e.target.value)}
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setIsNickNameChanged(true);
+              }}
               className="grow rounded border border-gray-400 bg-gray-100 pl-2"
             />
           </div>
