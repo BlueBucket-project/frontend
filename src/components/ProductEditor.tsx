@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { instanceH } from "../api";
+import { instance, instanceH } from "../api";
 import { useAppSelector } from "../app/hooks.ts";
 import { useNavigate } from "react-router-dom";
 
@@ -31,10 +31,12 @@ export default function ProductEditor({
   const [product, setProduct] = useState<ProductDto>(initialProduct);
   const [files, setFiles] = useState<File[]>([]);
   const [images, setImages] = useState<Img[]>([]);
+  const [sellPlaces, setSellPlaces] = useState<SellPlace[]>([]);
   const navigate = useNavigate();
   const accessToken = useAppSelector((state) => state.user.accessToken);
 
   const createItem = () => {
+    console.log(product);
     const form = new FormData();
     form.append(
       "key",
@@ -68,7 +70,6 @@ export default function ProductEditor({
     files.forEach((f) => {
       form.append("files", new Blob([f]));
     });
-    console.log(form);
     instanceH(accessToken)
       .put(`/items/${product.itemId}`, form, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -91,6 +92,12 @@ export default function ProductEditor({
     const nextImages = images.filter((_, i) => i !== index);
     setImages(nextImages);
   };
+
+  useEffect(() => {
+    instance.get("/items/sellplace").then((res) => {
+      setSellPlaces(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     const parsedProduct: ProductDto = {
@@ -157,15 +164,25 @@ export default function ProductEditor({
         </div>
         <div className="flex border-b py-2">
           <div className="w-28">판매 장소</div>
-          <input
-            type="text"
-            placeholder="판매 장소"
-            value={product.sellPlace}
+          <select
+            name="places"
+            id="places"
+            className="border bg-gray-50"
+            value={
+              sellPlaces.filter(
+                (p) => p.containerName === product.sellPlace.split("/")[0],
+              )[0]?.containerId
+            }
             onChange={(e) => {
               setProduct({ ...product, sellPlace: e.target.value });
             }}
-            className="w-1/3 border bg-gray-50 pl-2"
-          />
+          >
+            {sellPlaces.map((p, i) => (
+              <option key={`place_${i}`} value={p.containerId}>
+                {p.containerName}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex border-b py-2">
           <div className="w-28">가격</div>
