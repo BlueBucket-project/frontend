@@ -173,7 +173,7 @@ export default function ItemDetail() {
                 >
                   <div className="w-content h-screen">
                     <img
-                      src={imgdata[focusedImg].uploadImgUrl}
+                      src={imgdata[focusedImg]?.uploadImgUrl || ""}
                       className="mx-auto h-full"
                     />
                   </div>
@@ -187,7 +187,7 @@ export default function ItemDetail() {
                       >
                         <img
                           className="h-full w-full"
-                          src={item.uploadImgUrl}
+                          src={item.uploadImgUrl || ""}
                         />
                       </div>
                     );
