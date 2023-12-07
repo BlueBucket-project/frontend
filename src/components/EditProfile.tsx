@@ -16,6 +16,7 @@ export default function EditProfile(): ReactElement {
   const [addr, setAddr] = useState<string>("");
   const [addrDetail, setAddrDetail] = useState<string>("");
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [pwRuleError, setPwRuleError] = useState<string>("");
 
   const onComplete = (data: Address) => {
     setZipCode(data.zonecode);
@@ -49,6 +50,10 @@ export default function EditProfile(): ReactElement {
     zipCode.length == 0 ||
     addr.length == 0 ||
     addrDetail.length == 0;
+
+  const isValidPassword = (e: string) => {
+    return /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/.test(e);
+  };
 
   const onSubmit = () => {
     if (password === "" && confirmPassword === "") {
@@ -104,10 +109,21 @@ export default function EditProfile(): ReactElement {
                 type="password"
                 placeholder="비밀번호"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (!isValidPassword(e.target.value)) {
+                    setPwRuleError(
+                      "비밀번호는 영어, 숫자, 특수문자를 적어도 1개는 포함하여야 합니다.",
+                    );
+                  } else {
+                    setPwRuleError("");
+                  }
+                }}
                 className="rounded border border-gray-400 bg-gray-100 pl-2"
               />
-              <div className="hidden text-sm">비밀번호 규칙</div>
+              <div hidden={pwRuleError === ""} className="text-sm">
+                {pwRuleError}
+              </div>
             </div>
           </div>
           <div className="flex">
