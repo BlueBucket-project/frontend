@@ -7,7 +7,7 @@ export const emptyProduct: Product = {
   regTime: "",
   memberNickName: "",
   stockNumber: 0,
-  sellPlace: "",
+  sellPlace: "1",
   itemReserver: null,
   itemRamount: 0,
   itemImgList: [],
