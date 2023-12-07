@@ -37,7 +37,10 @@ export default function Search() {
         },
       })
       .then((res) => {
-        setSearchResult(res.data.items);
+        const filtered = res.data.items.filter(
+          (item: Item) => item.itemSellStatus !== "SOLD_OUT",
+        );
+        setSearchResult(filtered);
       })
       .catch(() => {
         setSearchResult([]);

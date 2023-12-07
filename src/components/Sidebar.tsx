@@ -30,8 +30,8 @@ export default function Sidebar({ path }: { path: string }): ReactElement {
           </>
         ) : (
           <>
-            <Link to={links.purchase}>
-              <div className={path === links.purchase ? "font-bold" : ""}>
+            <Link to={links.history}>
+              <div className={path === links.history ? "font-bold" : ""}>
                 구매처리내역
               </div>
             </Link>

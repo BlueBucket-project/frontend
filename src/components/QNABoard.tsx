@@ -18,9 +18,15 @@ export function QNABoard({ item, rerender }: BoardProps) {
   const user = useAppSelector((state) => state.user);
 
   const boardDelete = () => {
-    instanceH(accessToken)
-      .delete(`/admins/boards/${item.boardId}`)
-      .then(() => rerender());
+    if (user.role === "ROLE_USER") {
+      instanceH(accessToken)
+        .delete(`/${item.itemId}/boards/${item.boardId}`)
+        .then(() => rerender());
+    } else {
+      instanceH(accessToken)
+        .delete(`/admins/boards/${item.boardId}`)
+        .then(() => rerender());
+    }
   };
 
   const boardEdit = () => {
