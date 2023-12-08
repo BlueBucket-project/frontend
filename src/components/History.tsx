@@ -7,7 +7,6 @@ export default function History(): ReactElement {
   const [histories, setHistories] = useState<PurchaseHistory[]>([]);
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
-
   useEffect(() => {
     instanceH(user.accessToken)
       .get(`/users/order/${user.memberEmail}`)
@@ -17,7 +16,7 @@ export default function History(): ReactElement {
   return (
     <div>
       <div className="border-b-2 border-black pb-2 pl-4 text-3xl">
-        구매 이력
+        {user.role === "ROLE_USER" ? "구매 이력" : "구매 처리 내역"}
       </div>
       <div className="grid max-w-5xl grid-cols-6 gap-3 border-b border-gray-400 py-4 pl-10 text-center font-bold">
         <div className="col-span-3">상품명</div>
